@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Avatar,
@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,8 +33,39 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
-
   const classes = useStyles();
+
+  const [data, setData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    pass: '',
+    phone: '',
+    entity: '',
+    job: '',
+    place: '',
+  });
+  const handleInputChange = (event) => {
+    setData({
+      ...data,
+      [event.target.name]: event.target.value
+    })
+  };
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    axios({
+      method: "POST",
+      url: "http://localhost:9004/registry",
+      data: data
+    }).then((response) => {
+      if (response.status === 201) {
+        alert("Message Sent.");
+        this.resetForm()
+      } else if (response.status >= 400 ) {
+        alert("Message failed to send.")
+      }
+    })
+  };
 
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
@@ -44,7 +76,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Registrarse
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -54,7 +86,8 @@ export default function SignUp() {
                 fullWidth
                 label="Nombre"
                 autoFocus
-                autoComplete="fname" />
+                autoComplete="fname"
+                onChange={handleInputChange} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -63,7 +96,8 @@ export default function SignUp() {
                 required
                 fullWidth
                 label="Apellido"
-                autoComplete="lname" />
+                autoComplete="lname"
+                onChange={handleInputChange} />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -72,31 +106,35 @@ export default function SignUp() {
                 required
                 fullWidth
                 label="Correo"
-                autoComplete="email" />
+                autoComplete="email"
+                onChange={handleInputChange} />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                id="password"
-                name="password"
+                id="pass"
+                name="pass"
                 required
                 fullWidth
                 type="password"
                 label="Clave"
-                autoComplete="current-password" />
+                autoComplete="current-password"
+                onChange={handleInputChange} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField id="phone"
                 name="phone"
                 required
                 fullWidth
-                label="Teléfono" />
+                label="Teléfono"
+                onChange={handleInputChange} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField id="entity"
                 name="entity"
                 required
                 fullWidth
-                label="Entidad" />
+                label="Entidad"
+                onChange={handleInputChange} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -104,15 +142,17 @@ export default function SignUp() {
                 name="job"
                 required
                 fullWidth
-                label="Puesto/Rol" />
+                label="Puesto/Rol"
+                onChange={handleInputChange} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 id="place"
-                name="palce"
+                name="place"
                 required
                 fullWidth
-                label="Ubicación" />
+                label="Ubicación"
+                onChange={handleInputChange} />
             </Grid>
           </Grid>
           <Button
@@ -120,8 +160,7 @@ export default function SignUp() {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
-          >
+            className={classes.submit} >
             Registrarse
           </Button>
           <Grid container justify="flex-end">

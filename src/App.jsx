@@ -16,6 +16,7 @@ import {
   Link,
 } from "react-router-dom";
 import SignUp from './SignUp'
+import SignIn from './SignIn'
 import Landing from './Landing'
 
 const useStyles = makeStyles((theme) => ({
@@ -46,7 +47,7 @@ function App() {
             </Typography>
             <Button color="inherit" component={Link} to="/">Home</Button>
             <Button color="inherit" component={Link} to="/register">Registrarse</Button>
-            <Button color="inherit">Ingresar</Button>
+            <Button color="inherit" component={Link} to="/logIn">Ingresar</Button>
           </Toolbar>
         </AppBar>
         <Container>
@@ -56,6 +57,9 @@ function App() {
             </Route>
             <Route path="/register">
               <SignUp />
+            </Route>
+            <Route path="/logIn">
+              <SignIn />
             </Route>
           </Switch>
         </Container>

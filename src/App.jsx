@@ -8,10 +8,11 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import Navbar from './Navbar'
-import SignUp from './SignUp'
-import SignIn from './SignIn'
-import Landing from './Landing'
+import Navbar from './components/Navbar'
+import SignUp from './components/SignUp'
+import SignIn from './components/SignIn'
+import Landing from './components/Landing'
+import AuthContextProvider from './contexts/AuthContext';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -23,24 +24,26 @@ function App() {
   const classes = useStyles();
 
   return (
-    <Router>
-      <div className={classes.root}>
-        <Navbar></Navbar>
-        <Container>
-          <Switch>
-            <Route path="/" exact>
-              <Landing />
-            </Route>
-            <Route path="/register">
-              <SignUp />
-            </Route>
-            <Route path="/logIn">
-              <SignIn />
-            </Route>
-          </Switch>
-        </Container>
-      </div>
-    </Router>
+    <div className={classes.root}>
+      <AuthContextProvider>
+        <Router>
+          <Navbar></Navbar>
+          <Container>
+            <Switch>
+              <Route path="/" exact>
+                <Landing />
+              </Route>
+              <Route path="/register">
+                <SignUp />
+              </Route>
+              <Route path="/logIn">
+                <SignIn />
+              </Route>
+            </Switch>
+          </Container>
+        </Router>
+      </AuthContextProvider>
+    </div>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
   Avatar,
   Box,
@@ -14,6 +14,8 @@ import Alert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import {AuthContext} from '../contexts/AuthContext'
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,8 +39,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const { authenticate } = useContext(AuthContext);
   const [data, setData] = useState({ email: '', pass: '' })
   const [requestStatus, setRequestStatus] = useState({ status: null });
+  let history = useHistory();
   const handleInputChange = (event) => {
     setData({
       ...data,
@@ -51,8 +55,10 @@ export default function SignIn() {
       method: "POST",
       url: "http://localhost:9004/login",
       data: data
-    }).then(() => {
+    }).then((response) => {
+      authenticate(response.data.token)
       setRequestStatus({ status: 'success' })
+      history.push("/");
     }).catch(() => {
       setRequestStatus({ status: 'error' })
     })

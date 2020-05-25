@@ -1,6 +1,3 @@
-# covid-front-react
-UNQ | ArqSoft | TP Covid | Frontend React
-
 # Frontend » React
 
 ## TP » Insumos Médicos » UNQ » ArqSoft
@@ -11,12 +8,16 @@ UNQ | ArqSoft | TP Covid | Frontend React
 
 ## TL;DR
 
+Ir a <https://github.com/unq-arqsoft-difi/covid-back-node.git> y levantar la API.
+
 ```sh
 git clone https://github.com/unq-arqsoft-difi/covid-front-react.git
 cd covid-front-react
-npm install # or yarn install
-npm run start # or yarn start
+yarn install
+yarn run start
 ```
+
+La APP quedará levantada en `http://localhost:3000`
 
 ## Install & Run
 
@@ -30,15 +31,15 @@ cd covid-front-react
 ### Install
 
 ```sh
-npm install # or yarn install
+yarn install
 ```
 
 ### Run
 
+Ir a <https://github.com/unq-arqsoft-difi/covid-back-node.git> y levantar la API.
+
 ```sh
-npm run start # or yarn start
+yarn run start
 ```
 
-### Frameworks
-
-* material-ui
+La API quedará levantada en `http://localhost:3000`

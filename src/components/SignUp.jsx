@@ -62,7 +62,7 @@ export default function SignUp() {
     evt.preventDefault();
     axios({
       method: "POST",
-      url: "http://localhost:9004/users",
+      url: "http://localhost:9001/users",
       data: data
     }).then(() => {
       resetForm()

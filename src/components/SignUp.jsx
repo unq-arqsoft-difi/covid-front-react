@@ -53,7 +53,7 @@ export default function SignUp() {
     place: '',
   };
   const [data, setData] = useState(emptyData);
-  const [requestStatus, setRequestStatus] = useState({status: null, description: []});
+  const [requestStatus, setRequestStatus] = useState({ status: null, description: [] });
   const handleInputChange = (event) => {
     setData({
       ...data,
@@ -63,11 +63,12 @@ export default function SignUp() {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     UsersService.post(data)
-      .then(() => {console.log("HOLAA"); history.push("/login")})
-      .catch((body) => {
-        console.log(body);
-        setRequestStatus({status: 'error', description: body.errors})}
-      );
+      .then(() => {
+        history.push("/login")
+      })
+      .catch((body) => { 
+        setRequestStatus({ status: 'error', description: body.errors }) 
+      });
   };
 
   return (
@@ -87,11 +88,11 @@ export default function SignUp() {
 
               ))}
             </List>
-            </Alert>
+          </Alert>
         }
-        {requestStatus === 'success' &&       
-          <Alert className={classes.alert} severity="success">This is a success alert — check it out!</Alert> 
-        }        
+        {requestStatus === 'success' &&
+          <Alert className={classes.alert} severity="success">This is a success alert — check it out!</Alert>
+        }
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>

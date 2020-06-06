@@ -24,7 +24,6 @@ const AuthContextProvider = (props) => {
   };
   // Private methods
   const saveAuthInfo = (authInfo) => {
-    console.log(authInfo.token)
     setIsAuthenticated(true);
     setToken(authInfo.token);
   }

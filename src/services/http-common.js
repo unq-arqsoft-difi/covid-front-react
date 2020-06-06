@@ -1,8 +1,8 @@
 import axios from 'axios'
+import config from '../config/ClientConfig.json'
 
 export default axios.create({
-  // eslint-disable-next-line no-undef
-  baseURL: 'http://localhost:9001/',
+  baseURL: config.BASE_URL,
   headers: {
     'Content-type': 'application/json'
   }

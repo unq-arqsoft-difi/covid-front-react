@@ -13,7 +13,7 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import {AuthContext} from '../contexts/AuthContext'
+import { AuthContext } from '../contexts/AuthContext'
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,7 +50,13 @@ export default function SignIn() {
   };
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    authenticateWith(data).then(history.push("/")).catch(setRequestStatus({ status: 'error' }))
+    authenticateWith(data)
+      .then(() => {
+        history.push("/")
+      })
+      .catch(() => {
+        setRequestStatus({ status: 'error' })
+      })
   };
   return (
     <Container component="main" maxWidth="xs">

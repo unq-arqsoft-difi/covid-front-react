@@ -13,7 +13,6 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
 import {AuthContext} from '../contexts/AuthContext'
 import { useHistory } from "react-router-dom";
 
@@ -39,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-  const { authenticate } = useContext(AuthContext);
+  const { authenticateWith } = useContext(AuthContext);
   const [data, setData] = useState({ email: '', pass: '' })
   const [requestStatus, setRequestStatus] = useState({ status: null });
   let history = useHistory();
@@ -51,17 +50,7 @@ export default function SignIn() {
   };
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    axios({
-      method: "POST",
-      url: "http://localhost:9001/login",
-      data: data
-    }).then((response) => {
-      authenticate(response.data.token)
-      setRequestStatus({ status: 'success' })
-      history.push("/");
-    }).catch(() => {
-      setRequestStatus({ status: 'error' })
-    })
+    authenticateWith(data).then(history.push("/")).catch(setRequestStatus({ status: 'error' }))
   };
   return (
     <Container component="main" maxWidth="xs">

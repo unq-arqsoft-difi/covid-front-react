@@ -13,7 +13,8 @@ import {
 } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Alert from '@material-ui/lab/Alert';
-import axios from 'axios';
+import UsersService from '../services/UsersService'
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -40,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  let history = useHistory();
   const emptyData = {
     firstName: '',
     lastName: '',
@@ -51,7 +53,7 @@ export default function SignUp() {
     place: '',
   };
   const [data, setData] = useState(emptyData);
-  const [requestStatus, setRequestStatus] = useState({status: null});
+  const [requestStatus, setRequestStatus] = useState({status: null, description: []});
   const handleInputChange = (event) => {
     setData({
       ...data,
@@ -60,18 +62,13 @@ export default function SignUp() {
   };
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    axios({
-      method: "POST",
-      url: "http://localhost:9001/users",
-      data: data
-    }).then(() => {
-      resetForm()
-      alert("Message Sent.");
-    }).catch((error) => {
-  setRequestStatus({status: 'error', description: error.response.data.errors})
-  })
+    UsersService.post(data)
+      .then(() => {console.log("HOLAA"); history.push("/login")})
+      .catch((body) => {
+        console.log(body);
+        setRequestStatus({status: 'error', description: body.errors})}
+      );
   };
-  const resetForm = () => { setData(emptyData) }
 
   return (
     <Container className={classes.container} component="main" maxWidth="xs">

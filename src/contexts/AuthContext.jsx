@@ -6,11 +6,7 @@ export const AuthContext = createContext();
 
 const AuthContextProvider = (props) => {
   const authKey = 'auth';
-  const initializeToken = () => {
-    return (localStorage.getItem(authKey) || null);
-  };
-
-  const [token, setToken] = useState(initializeToken());
+  const [token, setToken] = useState(localStorage.getItem(authKey));
 
   const authenticateWith = (credentials) => {
     return new Promise((resolve, reject) => {
@@ -19,20 +15,22 @@ const AuthContextProvider = (props) => {
           saveAuthInfo(data);
           resolve(data);
         })
-        .catch(reject)
+        .catch(reject);
     })
   }
 
   const logOut = () => {
     setToken(null);
-    localStorage.setItem(authKey,null)
+    localStorage.setItem(authKey, null);
   };
 
   const isAuthenticated = () => token != null
 
   // Private methods
   const saveAuthInfo = (authInfo) => {
-    setToken(authInfo.token)}
+    setToken(authInfo.token)
+  }
+  
   return (
     <AuthContext.Provider value={{ isAuthenticated, token, logOut, authenticateWith }}>
       {props.children}

@@ -5,28 +5,32 @@ import AuthService from '../services/AuthService'
 export const AuthContext = createContext();
 
 const AuthContextProvider = (props) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useState(null);
+  const authKey = 'auth';
+  const [token, setToken] = useState(localStorage.getItem(authKey));
+
   const authenticateWith = (credentials) => {
     return new Promise((resolve, reject) => {
       AuthService.post(credentials)
         .then(data => {
           saveAuthInfo(data);
           resolve(data);
-        }
-        )
-        .catch(reject)
+        })
+        .catch(reject);
     })
   }
+
   const logOut = () => {
-    setIsAuthenticated(false);
     setToken(null);
+    localStorage.setItem(authKey, null);
   };
+
+  const isAuthenticated = () => token != null
+
   // Private methods
   const saveAuthInfo = (authInfo) => {
-    setIsAuthenticated(true);
-    setToken(authInfo.token);
+    setToken(authInfo.token)
   }
+  
   return (
     <AuthContext.Provider value={{ isAuthenticated, token, logOut, authenticateWith }}>
       {props.children}

@@ -36,7 +36,7 @@ const Navbar = () => {
           DIFI Ecosystem
             </Typography>
         <Button color="inherit" component={Link} to="/">Home</Button>
-        {isAuthenticated ? (
+        {isAuthenticated() ? (
           <Button color="inherit" onClick={logOut} component={Link} to="/">Logout</Button>
         ) : (<div>
           <Button color="inherit" component={Link} to="/register">Registrarse</Button>

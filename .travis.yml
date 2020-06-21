@@ -7,14 +7,7 @@ cache:
 services:
   - docker
 
-before_install:
-  - pushd .travis
-  - openssl aes-256-cbc -K $encrypted_1da259efee69_key -iv $encrypted_1da259efee69_iv
-  -in deploy_key_difi_front.enc -out deploy_key_difi_front -d
-  - rm deploy_key_difi_front.enc
-  - chmod 600 deploy_key_difi_front
-  - mv deploy_key_difi_front ~/.ssh/id_rsa
-  - popd
+before_install: bash .travis/docker_setup_ssh.sh
 
 before_script: yarn run lint
 after_success: bash .travis/docker_and_deploy.sh

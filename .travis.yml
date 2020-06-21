@@ -8,9 +8,6 @@ services:
   - docker
 
 before_install:
-
-before_install:
-
   - pushd .travis
   - openssl aes-256-cbc -K $encrypted_1da259efee69_key -iv $encrypted_1da259efee69_iv
   -in deploy_key_difi_front.enc -out deploy_key_difi_front -d

@@ -5,6 +5,7 @@
     "Julián Fischetti <jfischetti94@gmail.com>",
     "Leandro Di Lorenzo <leandro.jdl@gmail.com>"
   ],
+  "license": "MIT",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -32,7 +33,7 @@
     "@testing-library/jest-dom": "^5.11.0",
     "@testing-library/react": "^10.4.3",
     "@testing-library/user-event": "^12.0.11",
-    "eslint": "^7.3.1",
+    "eslint": "^6.6.1",
     "eslint-plugin-react": "^7.20.0"
   },
   "eslintConfig": {

@@ -1,27 +1,33 @@
 {
   "name": "covid-front-react",
-  "version": "0.1.0",
-  "author": "difi",
-  "private": true,
-  "dependencies": {
-    "@material-ui/core": "^4.10.2",
-    "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "^4.0.0-alpha.56",
-    "@testing-library/jest-dom": "^5.10.0",
-    "@testing-library/react": "^10.2.1",
-    "@testing-library/user-event": "^11.4.2",
-    "axios": "^0.19.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1"
-  },
+  "version": "1.2.0",
+  "contributors": [
+    "Julián Fischetti <jfischetti94@gmail.com>",
+    "Leandro Di Lorenzo <leandro.jdl@gmail.com>"
+  ],
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest --passWithNoTests",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .jsx,.js src"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.10.2",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "axios": "^0.19.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.10.0",
+    "@testing-library/react": "^10.2.1",
+    "@testing-library/user-event": "^11.4.2",
+    "eslint": "^6.6.0",
+    "eslint-plugin-react": "^7.20.0"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,16 +36,12 @@
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all" 
     ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "eslint": "^6.6.0",
-    "eslint-plugin-react": "^7.20.0"
   }
 }

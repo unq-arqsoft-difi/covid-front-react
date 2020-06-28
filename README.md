@@ -1,5 +1,10 @@
 # Frontend » React
 
+[![Build Status](https://img.shields.io/travis/unq-arqsoft-difi/covid-front-react/master?logo=travis)](https://travis-ci.org/unq-arqsoft-difi/covid-front-react)
+[![Dependencies](https://img.shields.io/david/unq-arqsoft-difi/covid-front-react.svg)](https://david-dm.org/unq-arqsoft-difi/covid-front-react)
+[![Coverage Status](https://img.shields.io/coveralls/github/unq-arqsoft-difi/covid-front-react/master?logo=coveralls)](https://coveralls.io/github/unq-arqsoft-difi/covid-front-react?branch=master)
+[![Maintainability](https://img.shields.io/codeclimate/maintainability/unq-arqsoft-difi/covid-front-react?logo=code-climate)](https://codeclimate.com/github/unq-arqsoft-difi/covid-front-react/maintainability)
+
 ## TP » Insumos Médicos » UNQ » ArqSoft
 
 ### Repo Central » Info y Documentación

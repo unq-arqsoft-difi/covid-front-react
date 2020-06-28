@@ -8,7 +8,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar/Navbar'
 import SignUp from './components/SignUp'
 import SignIn from './components/SignIn'
 import Landing from './components/Landing'
@@ -27,7 +27,7 @@ function App() {
     <div className={classes.root}>
       <AuthContextProvider>
         <Router>
-          <Navbar></Navbar>
+          <Navbar />
           <Container>
             <Switch>
               <Route path="/" exact>

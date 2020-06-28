@@ -9,8 +9,8 @@ import {
   Route,
 } from "react-router-dom";
 import Navbar from './components/Navbar/Navbar'
-import SignUp from './components/SignUp'
-import SignIn from './components/SignIn'
+import SignUp from './components/Register'
+import SignIn from './components/Login'
 import Landing from './components/Landing'
 import AuthContextProvider from './contexts/AuthContext';
 

@@ -14,9 +14,10 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from "react-router-dom";
 import { AuthContext } from './../../contexts/AuthContext';
-import NavbarMobileMenu from './NavbarMobileMenu'
+import MobileMenu from './components/MobileMenu'
 
 const useStyles = makeStyles((theme) => ({
+  offset: theme.mixins.toolbar,
   list: {
     width: 250,
   },
@@ -63,9 +64,8 @@ export default function PrimarySearchAppBar() {
         }
         className={classes.root}
       >
-      </List>
       <Divider />
-
+      </List>
     </div>
   )
 
@@ -102,11 +102,13 @@ export default function PrimarySearchAppBar() {
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {isAuthenticated() ? (<Button color="inherit" onClick={logOut} component={Link} to="/">Logout</Button>) : renderRegisterLoginMenu}
+            {isAuthenticated() ?
+              (<Button color="inherit" onClick={logOut} component={Link} to="/">Logout</Button>) : renderRegisterLoginMenu}
           </div>
-          <NavbarMobileMenu />
+          <MobileMenu />
         </Toolbar>
       </AppBar>
+      <div className={classes.offset} />
     </div>
   );
 }

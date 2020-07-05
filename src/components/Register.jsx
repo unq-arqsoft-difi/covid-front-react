@@ -15,6 +15,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Alert from '@material-ui/lab/Alert';
 import UsersService from '../services/UsersService'
 import { useHistory } from "react-router-dom";
+import ProvincesSelection from './common/ProvincesSelection';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -66,8 +67,8 @@ export default function SignUp() {
       .then(() => {
         history.push("/login")
       })
-      .catch((body) => { 
-        setRequestStatus({ status: 'error', description: body.errors }) 
+      .catch((body) => {
+        setRequestStatus({ status: 'error', description: body.errors })
       });
   };
 
@@ -170,14 +171,14 @@ export default function SignUp() {
                 onChange={handleInputChange} />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                id="place"
-                name="place"
-                required
-                fullWidth
-                label="Ubicación"
-                value={data.place}
-                onChange={handleInputChange} />
+              <ProvincesSelection name='place' onChange={
+                (event) => {
+                  setData({
+                    ...data,
+                    place: event.target.value
+                  })
+                }
+              } />
             </Grid>
           </Grid>
           <Button

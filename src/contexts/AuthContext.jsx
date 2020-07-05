@@ -24,7 +24,7 @@ const AuthContextProvider = (props) => {
     localStorage.setItem(authKey, null);
   };
 
-  const isAuthenticated = () => token != null
+  const isAuthenticated = () => token != null;
 
   // Private methods
   const saveAuthInfo = (authInfo) => {

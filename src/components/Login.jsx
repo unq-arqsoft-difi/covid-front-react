@@ -1,10 +1,8 @@
 import React, { useState, useContext } from 'react'
 import {
   Avatar,
-  Box,
   Button,
   Container,
-  CssBaseline,
   Grid,
   Link,
   TextField,
@@ -60,7 +58,6 @@ export default function SignIn() {
   };
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -126,8 +123,6 @@ export default function SignIn() {
           </Grid>
         </form>
       </div >
-      <Box mt={8}>
-      </Box>
     </Container >
   );
 }

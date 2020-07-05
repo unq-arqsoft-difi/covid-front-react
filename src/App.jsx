@@ -8,9 +8,9 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import Navbar from './components/Navbar'
-import SignUp from './components/SignUp'
-import SignIn from './components/SignIn'
+import Navbar from './components/Navbar/Navbar'
+import SignUp from './components/Register'
+import SignIn from './components/Login'
 import Landing from './components/Landing'
 import AuthContextProvider from './contexts/AuthContext';
 
@@ -27,7 +27,7 @@ function App() {
     <div className={classes.root}>
       <AuthContextProvider>
         <Router>
-          <Navbar></Navbar>
+          <Navbar />
           <Container>
             <Switch>
               <Route path="/" exact>

@@ -1,13 +1,25 @@
-import React, { Component } from 'react'
+import React from 'react'
+import {
+  Box,
+  Typography
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-export class Landing extends Component {
-    render() {
-        return (
-            <div>
-               <h1>Landing Page</h1> 
-            </div>
-        )
-    }
+const useStyles = makeStyles((theme) => ({
+  subTitleContainer: {
+    marginTop: theme.spacing(8),
+    textAlign: "center",
+  }
+}));
+
+const Landing = () => {
+  const classes = useStyles()
+  return (
+    <Box bgcolor='primary' className={classes.subTitleContainer}>
+      <Typography variant='h4'>
+        Sistema de insumos médicos
+        </Typography>
+    </Box>);
 }
 
-export default Landing
+export default Landing;

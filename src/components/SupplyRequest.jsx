@@ -47,7 +47,7 @@ const SupplyRequest = () => {
       .then((data) => {
         setSupplies(data);
       })
-      .catch((e) => console.error(e));
+      .catch(() => {});
   }, []);
 
   useEffect(() => {

@@ -30,7 +30,7 @@ const ProvincesSelection = ({ name, label, onChange }) => {
       .then((data) => {
         setOptions(data.map(obj => obj.name))
       })
-      .catch((e) => console.error(e))
+      .catch(() => {})
   }, [])
   const [open, setOpen] = useState(false);
   const handleClose = () => {

@@ -13,6 +13,7 @@ import SignUp from './components/Register'
 import SignIn from './components/Login'
 import Landing from './components/Landing'
 import AuthContextProvider from './contexts/AuthContext';
+import SupplyRequest from './components/SupplyRequest';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -38,6 +39,9 @@ function App() {
               </Route>
               <Route path="/logIn">
                 <SignIn />
+              </Route>
+              <Route path="/supply-request">
+                <SupplyRequest />
               </Route>
             </Switch>
           </Container>

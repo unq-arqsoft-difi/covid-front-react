@@ -7,7 +7,7 @@ import {
   MenuItem,
   Select,
 } from '@material-ui/core'
-import CommonService from '../../services/CommonService'
+import {ProvincesService} from '../../services/CommonService'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -26,11 +26,11 @@ const ProvincesSelection = ({ name, label, onChange }) => {
   const [province, setProvince] = useState("");
   const [options, setOptions] = useState([]);
   useEffect(() => {
-    CommonService.get()
+    ProvincesService.get()
       .then((data) => {
         setOptions(data.map(obj => obj.name))
       })
-      .catch((e) => console.error(e))
+      .catch(() => {})
   }, [])
   const [open, setOpen] = useState(false);
   const handleClose = () => {

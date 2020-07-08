@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState,useEffect } from 'react'
 import AuthService from '../services/AuthService'
 
 export const AuthContext = createContext();
@@ -8,11 +8,15 @@ const AuthContextProvider = (props) => {
   const authKey = 'auth';
   const [token, setToken] = useState(localStorage.getItem(authKey));
 
+  useEffect(() => {
+    localStorage.setItem(authKey, token);
+  }, [token]);
+
   const authenticateWith = (credentials) => {
     return new Promise((resolve, reject) => {
       AuthService.post(credentials)
         .then(data => {
-          saveAuthInfo(data);
+          setToken(data.token)
           resolve(data);
         })
         .catch(reject);
@@ -21,16 +25,10 @@ const AuthContextProvider = (props) => {
 
   const logOut = () => {
     setToken(null);
-    localStorage.setItem(authKey, null);
   };
 
   const isAuthenticated = () => token != null;
 
-  // Private methods
-  const saveAuthInfo = (authInfo) => {
-    setToken(authInfo.token)
-  }
-  
   return (
     <AuthContext.Provider value={{ isAuthenticated, token, logOut, authenticateWith }}>
       {props.children}

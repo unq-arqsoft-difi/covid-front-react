@@ -112,7 +112,7 @@ export default function SignIn() {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Ingresar
           </Button>
           <Grid container justify="flex-end">
             <Grid item>

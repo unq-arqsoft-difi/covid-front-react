@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
-import { SuppliesService, AreasService } from "../services/CommonService";
+import { SuppliesService, AreasService, SuppliesRequestService } from "../services/CommonService";
 import { AuthContext } from "./../contexts/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
@@ -75,7 +75,7 @@ const SupplyRequest = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    SuppliesService.post(data, token)
+    SuppliesRequestService.post(data, token)
       .then(() => {
         setPostStatus('success');
       })

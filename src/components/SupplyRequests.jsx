@@ -103,8 +103,8 @@ const SupplyRequests = () => {
             <StyledTableRow>
               <StyledTableCell>Insumo</StyledTableCell>
               <StyledTableCell align="right">Cantidad</StyledTableCell>
-              <StyledTableCell align="right">Area</StyledTableCell>
-              <StyledTableCell align="right">Estado</StyledTableCell>
+              <StyledTableCell align="left">Area</StyledTableCell>
+              <StyledTableCell align="left">Estado</StyledTableCell>
             </StyledTableRow>
           </TableHead>
           <TableBody>

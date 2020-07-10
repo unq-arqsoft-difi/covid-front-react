@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@material-ui/core/";
 import { Menu } from "@material-ui/icons";
-import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
+import {LocalHospital, Archive} from "@material-ui/icons/";
 import { Link } from "react-router-dom";
 import { AuthContext } from "./../../contexts/AuthContext";
 import MobileMenu from "./components/MobileMenu";
@@ -68,12 +68,20 @@ export default function PrimarySearchAppBar() {
         className={classes.root}
       >
         {isAuthenticated() ? (
+        <>
           <ListItem button component={Link} to="/supply-request">
             <ListItemIcon>
-              <LocalHospitalIcon />
+              <LocalHospital />
             </ListItemIcon>
             <ListItemText primary="Solicitar Insumo" />
           </ListItem>
+          <ListItem button component={Link} to="/supply-requests">
+          <ListItemIcon>
+            <Archive />
+          </ListItemIcon>
+          <ListItemText primary="Mis solicitudes" />
+        </ListItem>
+        </>
         ) : (
           <></>
         )}

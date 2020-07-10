@@ -1,10 +1,10 @@
-import http from './http-common';
+import http from "./http-common";
 
-class ProvincesService {
-  get() {
+const ProvincesService = {
+  get: () => {
     return new Promise((resolve, reject) => {
       http
-        .get('/support/provinces')
+        .get("/support/provinces")
         .then((response) => {
           resolve(response.data);
         })
@@ -14,14 +14,14 @@ class ProvincesService {
           }
         });
     });
-  }
-}
+  },
+};
 
-class AreasService {
-  get() {
+const AreasService = {
+  get: () => {
     return new Promise((resolve, reject) => {
       http
-        .get('/support/areas')
+        .get("/support/areas")
         .then((response) => {
           resolve(response.data);
         })
@@ -31,14 +31,14 @@ class AreasService {
           }
         });
     });
-  }
-}
+  },
+};
 
-class SuppliesService {
-  get() {
+const SuppliesService = {
+  get: () => {
     return new Promise((resolve, reject) => {
       http
-        .get('/support/supplies')
+        .get("/support/supplies")
         .then((response) => {
           resolve(response.data);
         })
@@ -48,21 +48,19 @@ class SuppliesService {
           }
         });
     });
-  }
-  post(supplyRequest, token) {
-    return new Promise((resolve, reject) => {
+  },
+};
 
-      const config = http.interceptors.request.use(config => {
-        config.headers.post['Authorization'] = `Bearer ${token}`;
+const SuppliesRequestService = {
+  get: (token) => {
+    return new Promise((resolve, reject) => {
+      const config = http.interceptors.request.use((config) => {
+        config.headers.get["Authorization"] = `Bearer ${token}`;
         return config;
       });
-      
+
       http
-        .post('/request-supplies', {
-          areaId: supplyRequest.area.id,
-          supplyId: supplyRequest.supply.id,
-          amount: supplyRequest.amount,
-        },config)
+        .get("/request-supplies", config)
         .then((response) => {
           resolve(response.data);
         })
@@ -72,15 +70,40 @@ class SuppliesService {
           }
         });
     });
-  }
-}
+  },
 
-const provincesService = new ProvincesService();
-const suppliesService = new SuppliesService();
-const areasService = new AreasService()
+  post: (supplyRequest, token) => {
+    return new Promise((resolve, reject) => {
+      const config = http.interceptors.request.use((config) => {
+        config.headers.post["Authorization"] = `Bearer ${token}`;
+        return config;
+      });
+
+      http
+        .post(
+          "/request-supplies",
+          {
+            areaId: supplyRequest.area.id,
+            supplyId: supplyRequest.supply.id,
+            amount: supplyRequest.amount,
+          },
+          config
+        )
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            reject(error.response.data);
+          }
+        });
+    });
+  },
+};
 
 export {
-  provincesService as ProvincesService,
-  suppliesService as SuppliesService,
-  areasService as AreasService,
+  ProvincesService,
+  SuppliesService,
+  AreasService,
+  SuppliesRequestService,
 };

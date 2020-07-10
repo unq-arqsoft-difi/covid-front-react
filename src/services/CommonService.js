@@ -99,6 +99,29 @@ const SuppliesRequestService = {
         });
     });
   },
+
+  delete: (supplyRequestId, token) => {
+    return new Promise((resolve, reject) => {
+      const config = http.interceptors.request.use((config) => {
+        config.headers.delete["Authorization"] = `Bearer ${token}`;
+        return config;
+      });
+
+      http
+        .delete(
+          `/request-supplies/${supplyRequestId}`,
+          config
+        )
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            reject(error.response.data);
+          }
+        });
+    });
+  }
 };
 
 export {

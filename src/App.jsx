@@ -14,7 +14,7 @@ import SignIn from './components/Login'
 import Landing from './components/Landing'
 import AuthContextProvider from './contexts/AuthContext';
 import SupplyRequest from './components/SupplyRequest';
-import SupplyRequests from './components/SupplyRequests';
+import SupplyRequests from './components/SupplyRequests/SupplyRequests';
 
 
 const useStyles = makeStyles(() => ({

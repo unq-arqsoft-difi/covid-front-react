@@ -21,6 +21,7 @@ import {
 import { Cancel } from "@material-ui/icons";
 import { AuthContext } from "../../contexts/AuthContext";
 import InformativeDialog from "./components/InformativeDialog";
+import StatusChip from "./components/StatusChip";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -46,6 +47,7 @@ const useStyles = makeStyles({
   },
 });
 
+
 const SupplyRequests = () => {
   const classes = useStyles();
   const { token } = useContext(AuthContext);
@@ -55,12 +57,6 @@ const SupplyRequests = () => {
   const [areas, setAreas] = useState([]);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [erroDialogOpen, setErrorDialogOpen] = useState(false);
-
-  const statusTranslate = {
-    Approved: "Aprobado",
-    Pending: "Pendiente",
-    Canceled: "Cancelado",
-  };
 
   const refreshData = () => {
     SuppliesRequestService.get(token)
@@ -80,17 +76,13 @@ const SupplyRequests = () => {
 
   useEffect(() => {
     SuppliesService.get()
-      .then((supplies) => {
-        setSupplies(arrayToObject(supplies));
-      })
+      .then((supplies) => setSupplies(arrayToObject(supplies)))
       .catch(() => {});
   }, []);
 
   useEffect(() => {
     AreasService.get()
-      .then((areas) => {
-        setAreas(arrayToObject(areas));
-      })
+      .then((areas) => setAreas(arrayToObject(areas)))
       .catch(() => {});
   }, []);
 
@@ -138,7 +130,7 @@ const SupplyRequests = () => {
                     {areas[row.areaId]}
                   </StyledTableCell>
                   <StyledTableCell align="left">
-                    {statusTranslate[row.status]}
+                    <StatusChip statusName={row.status} />
                   </StyledTableCell>
                   <StyledTableCell align="left">
                     <Tooltip title="Cancelar Solicitud">

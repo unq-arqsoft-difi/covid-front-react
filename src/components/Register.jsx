@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Avatar,
   Button,
@@ -10,33 +10,36 @@ import {
   Typography,
   List,
   ListItem,
-} from '@material-ui/core'
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Alert from '@material-ui/lab/Alert';
-import UsersService from '../services/UsersService'
+} from "@material-ui/core";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Alert from "@material-ui/lab/Alert";
+import UsersService from "../services/UsersService";
 import { useHistory } from "react-router-dom";
-import ProvincesSelection from './common/ProvincesSelection';
+import SingleSelection from "./common/SingleSelection";
+import TownSelection from "./common/TownSelection";
+import { InstitutionsService } from "../services/CommonService";
+import { ProvincesService } from "../services/CommonService";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
   alert: {
-    width: '100%',
+    width: "100%",
   },
 }));
 
@@ -44,31 +47,35 @@ export default function SignUp() {
   const classes = useStyles();
   let history = useHistory();
   const emptyData = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    pass: '',
-    phone: '',
-    entity: '',
-    job: '',
-    place: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    job: "",
+    pass: "",
+    institutionId: "",
+    provinceId: "",
+    townId: "",
   };
   const [data, setData] = useState(emptyData);
-  const [requestStatus, setRequestStatus] = useState({ status: null, description: [] });
+  const [requestStatus, setRequestStatus] = useState({
+    status: null,
+    description: [],
+  });
   const handleInputChange = (event) => {
     setData({
       ...data,
-      [event.target.name]: event.target.value
-    })
+      [event.target.name]: event.target.value,
+    });
   };
   const handleSubmit = (evt) => {
     evt.preventDefault();
     UsersService.post(data)
       .then(() => {
-        history.push("/login")
+        history.push("/login");
       })
       .catch((body) => {
-        setRequestStatus({ status: 'error', description: body.errors })
+        setRequestStatus({ status: "error", description: body.errors });
       });
   };
 
@@ -81,19 +88,20 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Registrarse
         </Typography>
-        {requestStatus.status === 'error' &&
+        {requestStatus.status === "error" && (
           <Alert className={classes.alert} severity="error">
             <List>
               {requestStatus.description.map((item, index) => (
                 <ListItem key={index.toString()}>{item}</ListItem>
-
               ))}
             </List>
           </Alert>
-        }
-        {requestStatus === 'success' &&
-          <Alert className={classes.alert} severity="success">This is a success alert — check it out!</Alert>
-        }
+        )}
+        {requestStatus === "success" && (
+          <Alert className={classes.alert} severity="success">
+            This is a success alert — check it out!
+          </Alert>
+        )}
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -106,7 +114,8 @@ export default function SignUp() {
                 autoFocus
                 autoComplete="fname"
                 value={data.firstName}
-                onChange={handleInputChange} />
+                onChange={handleInputChange}
+              />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -117,7 +126,8 @@ export default function SignUp() {
                 label="Apellido"
                 autoComplete="lname"
                 value={data.lastName}
-                onChange={handleInputChange} />
+                onChange={handleInputChange}
+              />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -128,7 +138,8 @@ export default function SignUp() {
                 label="Correo"
                 autoComplete="email"
                 value={data.email}
-                onChange={handleInputChange} />
+                onChange={handleInputChange}
+              />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -140,25 +151,32 @@ export default function SignUp() {
                 label="Clave"
                 autoComplete="current-password"
                 value={data.pass}
-                onChange={handleInputChange} />
+                onChange={handleInputChange}
+              />
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField id="phone"
+            <Grid item xs={12} sm={12}>
+              <TextField
+                id="phone"
                 name="phone"
                 required
                 fullWidth
                 label="Teléfono"
                 value={data.phone}
-                onChange={handleInputChange} />
+                onChange={handleInputChange}
+              />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField id="entity"
-                name="entity"
-                required
-                fullWidth
-                label="Entidad"
-                value={data.entity}
-                onChange={handleInputChange} />
+              <SingleSelection
+                name="institutionId"
+                label="Institución"
+                service={InstitutionsService}
+                onChange={(event) => {
+                  setData({
+                    ...data,
+                    institutionId: event.target.value.id,
+                  });
+                }}
+              />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -168,17 +186,32 @@ export default function SignUp() {
                 fullWidth
                 label="Puesto/Rol"
                 value={data.job}
-                onChange={handleInputChange} />
+                onChange={handleInputChange}
+              />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <ProvincesSelection name='place' onChange={
-                (event) => {
+              <SingleSelection
+                name="provinceId"
+                label="Provincia"
+                service={ProvincesService}
+                onChange={(event) => {
                   setData({
                     ...data,
-                    place: event.target.value
-                  })
-                }
-              } />
+                    provinceId: event.target.value.id,
+                  });
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TownSelection
+                onChange={(event) => {
+                  setData({
+                    ...data,
+                    townId: event.target.value.id,
+                  });
+                }}
+                provinceId={data.provinceId}
+              />
             </Grid>
           </Grid>
           <Button
@@ -186,7 +219,8 @@ export default function SignUp() {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit} >
+            className={classes.submit}
+          >
             Registrarse
           </Button>
           <Grid container justify="flex-end">

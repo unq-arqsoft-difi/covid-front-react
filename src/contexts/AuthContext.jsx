@@ -32,9 +32,10 @@ const AuthContextProvider = (props) => {
 
   const logOut = () => {
     setToken(null);
+    setIsAdmin(false)
   };
 
-  const isAuthenticated = () => token != null;
+  const isAuthenticated = () => !!token;
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, token, logOut, authenticateWith, isAdmin }}>

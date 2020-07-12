@@ -10,7 +10,7 @@ const ProvincesService = {
         })
         .catch((error) => {
           if (error.response) {
-            reject(error.response.data);
+            return reject(error.response.data);
           }
         });
     });
@@ -27,7 +27,7 @@ const AreasService = {
         })
         .catch((error) => {
           if (error.response) {
-            reject(error.response.data);
+            return reject(error.response.data);
           }
         });
     });
@@ -44,12 +44,46 @@ const SuppliesService = {
         })
         .catch((error) => {
           if (error.response) {
-            reject(error.response.data);
+            return reject(error.response.data);
           }
         });
     });
   },
 };
+
+const InstitutionsService = {
+  get: () => {
+    return new Promise((resolve, reject) => {
+      http
+        .get('/support/institutions')
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            return reject(error.response.data);
+          }
+        });
+    });
+  },
+}
+
+const TownsService = {
+  get: (provinceId) => {
+    return new Promise((resolve, reject) => {
+      http
+        .get(`/support/provinces/${provinceId}/towns`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            return reject(error.response.data);
+          }
+        });
+    });
+  },
+}
 
 const SuppliesRequestService = {
   get: (token) => {
@@ -94,7 +128,7 @@ const SuppliesRequestService = {
         })
         .catch((error) => {
           if (error.response) {
-            reject(error.response.data);
+            return reject(error.response.data);
           }
         });
     });
@@ -114,7 +148,7 @@ const SuppliesRequestService = {
         })
         .catch((error) => {
           if (error.response) {
-            reject(error.response.data);
+            return reject(error.response.data);
           }
         });
     });
@@ -184,7 +218,9 @@ const AdminSuppliesRequestService = {
 export {
   AdminSuppliesRequestService,
   AreasService,
+  InstitutionsService,
   ProvincesService,
   SuppliesRequestService,
   SuppliesService,
+  TownsService,
 };

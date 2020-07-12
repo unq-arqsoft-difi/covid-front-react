@@ -200,7 +200,7 @@ const AdminSuppliesRequestService = {
         return config;
       });
       http
-        .put(`/admin/request-supplies/${id}/reject`, {}, config)
+        .put(`/admin/request-supplies/${id}/reject`, {reason: reason}, config)
         .then((response) => {
           return resolve(response.data);
         })

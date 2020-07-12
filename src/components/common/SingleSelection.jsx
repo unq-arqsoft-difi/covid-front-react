@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
+import { InputLabel, MenuItem, Select } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   button: {
     display: "block",
     marginTop: theme.spacing(2),
   },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
 }));
 
 const SingleSelection = ({ name, label, onChange, service }) => {
-  const classes = useStyles();
+  useStyles();
   const [selection, setSelection] = useState("");
   const [options, setOptions] = useState([]);
   const [open, setOpen] = useState(false);
@@ -43,9 +39,10 @@ const SingleSelection = ({ name, label, onChange, service }) => {
   };
 
   return (
-    <FormControl className={classes.formControl}>
+    <>
       <InputLabel id={`select-label-${name}`}>{label}</InputLabel>
       <Select
+        fullWidth
         labelId={name}
         id={name}
         open={open}
@@ -63,7 +60,7 @@ const SingleSelection = ({ name, label, onChange, service }) => {
           </MenuItem>
         ))}
       </Select>
-    </FormControl>
+    </>
   );
 };
 

@@ -104,8 +104,8 @@ const AdminSupplyRequests = () => {
       });
   };
 
-  const approve = (id, reason) => {
-    AdminSuppliesRequestService.approve(id, reason, token)
+  const approve = (requestId, providerId) => {
+    AdminSuppliesRequestService.approve(requestId, providerId, token)
       .then(() => {
         setOpenAcceptRequest(false);
         refreshData();

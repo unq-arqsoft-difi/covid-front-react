@@ -34,6 +34,23 @@ const AreasService = {
   },
 };
 
+const ProvidersService = {
+  get: () => {
+    return new Promise((resolve, reject) => {
+      http
+        .get("/support/providers")
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            return reject(error.response.data);
+          }
+        });
+    });
+  },
+};
+
 const SuppliesService = {
   get: () => {
     return new Promise((resolve, reject) => {
@@ -55,7 +72,7 @@ const InstitutionsService = {
   get: () => {
     return new Promise((resolve, reject) => {
       http
-        .get('/support/institutions')
+        .get("/support/institutions")
         .then((response) => {
           resolve(response.data);
         })
@@ -66,7 +83,7 @@ const InstitutionsService = {
         });
     });
   },
-}
+};
 
 const TownsService = {
   get: (provinceId) => {
@@ -83,7 +100,7 @@ const TownsService = {
         });
     });
   },
-}
+};
 
 const SuppliesRequestService = {
   get: (token) => {
@@ -175,7 +192,7 @@ const AdminSuppliesRequestService = {
         });
     });
   },
-  
+
   reject: (id, reason, token) => {
     return new Promise((resolve, reject) => {
       const config = http.interceptors.request.use((config) => {
@@ -192,17 +209,21 @@ const AdminSuppliesRequestService = {
             return reject(error.response.data);
           }
         });
-      });
+    });
   },
 
-  approve: (id, supplyProvider, token) => {
+  approve: (id, providerId, token) => {
     return new Promise((resolve, reject) => {
       const config = http.interceptors.request.use((config) => {
         config.headers.put["Authorization"] = `Bearer ${token}`;
         return config;
       });
       http
-        .put(`/admin/request-supplies/${id}/approve`, {}, config)
+        .put(
+          `/admin/request-supplies/${id}/approve`,
+          { providerId: providerId },
+          config
+        )
         .then((response) => {
           return resolve(response.data);
         })
@@ -211,14 +232,15 @@ const AdminSuppliesRequestService = {
             return reject(error.response.data);
           }
         });
-      });
-  }
-}
+    });
+  },
+};
 
 export {
   AdminSuppliesRequestService,
   AreasService,
   InstitutionsService,
+  ProvidersService,
   ProvincesService,
   SuppliesRequestService,
   SuppliesService,

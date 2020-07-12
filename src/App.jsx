@@ -15,6 +15,7 @@ import Landing from './components/Landing'
 import AuthContextProvider from './contexts/AuthContext';
 import SupplyRequest from './components/SupplyRequest';
 import SupplyRequests from './components/SupplyRequests/SupplyRequests';
+import AdminSupplyRequests from './components/AdminSupplyRequests/AdminSupplyRequests';
 
 
 const useStyles = makeStyles(() => ({
@@ -47,6 +48,9 @@ function App() {
               </Route>
               <Route path="/supply-requests">
                 <SupplyRequests />
+              </Route>
+              <Route path="/admin/request-supplies">
+                <AdminSupplyRequests />
               </Route>
             </Switch>
           </Container>

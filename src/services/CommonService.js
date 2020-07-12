@@ -10,7 +10,7 @@ const ProvincesService = {
         })
         .catch((error) => {
           if (error.response) {
-            reject(error.response.data);
+            return reject(error.response.data);
           }
         });
     });
@@ -27,7 +27,24 @@ const AreasService = {
         })
         .catch((error) => {
           if (error.response) {
-            reject(error.response.data);
+            return reject(error.response.data);
+          }
+        });
+    });
+  },
+};
+
+const ProvidersService = {
+  get: () => {
+    return new Promise((resolve, reject) => {
+      http
+        .get("/support/providers")
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            return reject(error.response.data);
           }
         });
     });
@@ -44,7 +61,41 @@ const SuppliesService = {
         })
         .catch((error) => {
           if (error.response) {
-            reject(error.response.data);
+            return reject(error.response.data);
+          }
+        });
+    });
+  },
+};
+
+const InstitutionsService = {
+  get: () => {
+    return new Promise((resolve, reject) => {
+      http
+        .get("/support/institutions")
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            return reject(error.response.data);
+          }
+        });
+    });
+  },
+};
+
+const TownsService = {
+  get: (provinceId) => {
+    return new Promise((resolve, reject) => {
+      http
+        .get(`/support/provinces/${provinceId}/towns`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            return reject(error.response.data);
           }
         });
     });
@@ -94,7 +145,7 @@ const SuppliesRequestService = {
         })
         .catch((error) => {
           if (error.response) {
-            reject(error.response.data);
+            return reject(error.response.data);
           }
         });
     });
@@ -108,25 +159,90 @@ const SuppliesRequestService = {
       });
 
       http
-        .delete(
-          `/request-supplies/${supplyRequestId}`,
-          config
-        )
+        .delete(`/request-supplies/${supplyRequestId}`, config)
         .then((response) => {
           resolve(response.data);
         })
         .catch((error) => {
           if (error.response) {
-            reject(error.response.data);
+            return reject(error.response.data);
           }
         });
     });
-  }
+  },
+};
+
+const AdminSuppliesRequestService = {
+  get: (token) => {
+    return new Promise((resolve, reject) => {
+      const config = http.interceptors.request.use((config) => {
+        config.headers.get["Authorization"] = `Bearer ${token}`;
+        return config;
+      });
+
+      http
+        .get("/admin/request-supplies", config)
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            return reject(error.response.data);
+          }
+        });
+    });
+  },
+
+  reject: (id, reason, token) => {
+    return new Promise((resolve, reject) => {
+      const config = http.interceptors.request.use((config) => {
+        config.headers.put["Authorization"] = `Bearer ${token}`;
+        return config;
+      });
+      http
+        .put(`/admin/request-supplies/${id}/reject`, {reason: reason}, config)
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            return reject(error.response.data);
+          }
+        });
+    });
+  },
+
+  approve: (id, providerId, token) => {
+    return new Promise((resolve, reject) => {
+      const config = http.interceptors.request.use((config) => {
+        config.headers.put["Authorization"] = `Bearer ${token}`;
+        return config;
+      });
+      http
+        .put(
+          `/admin/request-supplies/${id}/approve`,
+          { providerId: providerId },
+          config
+        )
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            return reject(error.response.data);
+          }
+        });
+    });
+  },
 };
 
 export {
-  ProvincesService,
-  SuppliesService,
+  AdminSuppliesRequestService,
   AreasService,
+  InstitutionsService,
+  ProvidersService,
+  ProvincesService,
   SuppliesRequestService,
+  SuppliesService,
+  TownsService,
 };

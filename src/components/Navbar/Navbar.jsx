@@ -15,7 +15,11 @@ import {
   Typography,
 } from "@material-ui/core/";
 import { Menu } from "@material-ui/icons";
-import {LocalHospital, Archive} from "@material-ui/icons/";
+import {
+  LocalHospital,
+  Archive,
+  AssignmentTurnedIn,
+} from "@material-ui/icons/";
 import { Link } from "react-router-dom";
 import { AuthContext } from "./../../contexts/AuthContext";
 import MobileMenu from "./components/MobileMenu";
@@ -42,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpem] = useState(false);
-  const { isAuthenticated, logOut } = useContext(AuthContext);
+  const { isAuthenticated, logOut, isAdmin } = useContext(AuthContext);
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -68,20 +72,32 @@ export default function PrimarySearchAppBar() {
         className={classes.root}
       >
         {isAuthenticated() ? (
-        <>
-          <ListItem button component={Link} to="/supply-request">
-            <ListItemIcon>
-              <LocalHospital />
-            </ListItemIcon>
-            <ListItemText primary="Solicitar Insumo" />
-          </ListItem>
-          <ListItem button component={Link} to="/supply-requests">
-          <ListItemIcon>
-            <Archive />
-          </ListItemIcon>
-          <ListItemText primary="Mis solicitudes" />
-        </ListItem>
-        </>
+          <>
+            <ListItem button component={Link} to="/supply-request">
+              <ListItemIcon>
+                <LocalHospital />
+              </ListItemIcon>
+              <ListItemText primary="Solicitar Insumo" />
+            </ListItem>
+            <ListItem button component={Link} to="/supply-requests">
+              <ListItemIcon>
+                <Archive />
+              </ListItemIcon>
+              <ListItemText primary="Mis solicitudes" />
+            </ListItem>
+          </>
+        ) : (
+          <></>
+        )}
+        {isAdmin ? (
+          <>
+            <ListItem button component={Link} to="/admin/request-supplies">
+              <ListItemIcon>
+                <AssignmentTurnedIn />
+              </ListItemIcon>
+              <ListItemText primary="Solicitudes pendientes" />
+            </ListItem>
+          </>
         ) : (
           <></>
         )}

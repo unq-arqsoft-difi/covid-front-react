@@ -47,15 +47,13 @@ const SupplyRequest = () => {
       .then((data) => {
         setSupplies(data);
       })
-      .catch(() => {});
+      .catch(() => alert('Error al buscar los insumos disponibles.'));
   }, []);
 
   useEffect(() => {
     AreasService.get()
-      .then((areas) => {
-        setAreas(areas);
-      })
-      .catch(() => {});
+      .then((areas) => setAreas(areas))
+      .catch(() => alert('Error al buscar las areas disponibles.'));
   }, []);
 
   const handleSupplyChange = (event) => {

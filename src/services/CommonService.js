@@ -108,10 +108,7 @@ const SuppliesRequestService = {
       });
 
       http
-        .delete(
-          `/request-supplies/${supplyRequestId}`,
-          config
-        )
+        .delete(`/request-supplies/${supplyRequestId}`, config)
         .then((response) => {
           resolve(response.data);
         })
@@ -121,12 +118,73 @@ const SuppliesRequestService = {
           }
         });
     });
-  }
+  },
 };
 
+const AdminSuppliesRequestService = {
+  get: (token) => {
+    return new Promise((resolve, reject) => {
+      const config = http.interceptors.request.use((config) => {
+        config.headers.get["Authorization"] = `Bearer ${token}`;
+        return config;
+      });
+
+      http
+        .get("/admin/request-supplies", config)
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            return reject(error.response.data);
+          }
+        });
+    });
+  },
+  
+  reject: (id, reason, token) => {
+    return new Promise((resolve, reject) => {
+      const config = http.interceptors.request.use((config) => {
+        config.headers.put["Authorization"] = `Bearer ${token}`;
+        return config;
+      });
+      http
+        .put(`/admin/request-supplies/${id}/reject`, {}, config)
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            return reject(error.response.data);
+          }
+        });
+      });
+  },
+
+  approve: (id, supplyProvider, token) => {
+    return new Promise((resolve, reject) => {
+      const config = http.interceptors.request.use((config) => {
+        config.headers.put["Authorization"] = `Bearer ${token}`;
+        return config;
+      });
+      http
+        .put(`/admin/request-supplies/${id}/approve`, {}, config)
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            return reject(error.response.data);
+          }
+        });
+      });
+  }
+}
+
 export {
-  ProvincesService,
-  SuppliesService,
+  AdminSuppliesRequestService,
   AreasService,
+  ProvincesService,
   SuppliesRequestService,
+  SuppliesService,
 };

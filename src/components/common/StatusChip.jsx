@@ -26,13 +26,23 @@ const statusProps = {
   Canceled: {
     label: "Cancelado",
     style: {
+      color: "grey",
+      "border-top-color": "grey",
+      "border-right-color": "grey",
+      "border-bottom-color": "grey",
+      "border-left-color": "grey",
+    },
+  },
+  Rejected: {
+    label: "Rechazada",
+    style: {
       color: "red",
       "border-top-color": "red",
       "border-right-color": "red",
       "border-bottom-color": "red",
       "border-left-color": "red",
     },
-  },
+  }
 };
 
 const StatusChip = ({ statusName }) => {

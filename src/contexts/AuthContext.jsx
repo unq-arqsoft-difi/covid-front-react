@@ -6,16 +6,23 @@ export const AuthContext = createContext();
 
 const AuthContextProvider = (props) => {
   const authKey = 'auth';
+  const isAdminKey = 'isAdmin';
   const [token, setToken] = useState(localStorage.getItem(authKey));
+  const [isAdmin, setIsAdmin] = useState(localStorage.getItem(isAdminKey));
 
   useEffect(() => {
     localStorage.setItem(authKey, token);
   }, [token]);
 
+  useEffect(() => {
+    localStorage.setItem(isAdminKey, isAdmin);
+  }, [isAdmin]);
+
   const authenticateWith = (credentials) => {
     return new Promise((resolve, reject) => {
       AuthService.post(credentials)
         .then(data => {
+          setIsAdmin(data.admin)
           setToken(data.token)
           resolve(data);
         })
@@ -30,7 +37,7 @@ const AuthContextProvider = (props) => {
   const isAuthenticated = () => token != null;
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, token, logOut, authenticateWith }}>
+    <AuthContext.Provider value={{ isAuthenticated, token, logOut, authenticateWith, isAdmin }}>
       {props.children}
     </AuthContext.Provider>
   );

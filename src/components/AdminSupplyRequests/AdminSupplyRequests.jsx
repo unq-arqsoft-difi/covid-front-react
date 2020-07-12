@@ -14,14 +14,16 @@ import {
   Typography,
 } from "@material-ui/core";
 import {
-  SuppliesService,
+  AdminSuppliesRequestService,
   AreasService,
-  SuppliesRequestService,
+  SuppliesService,
 } from "../../services/CommonService";
-import { Cancel } from "@material-ui/icons";
+import { Cancel, CheckCircle } from "@material-ui/icons";
 import { AuthContext } from "../../contexts/AuthContext";
-import InformativeDialog from "./../common/InformativeDialog";
 import StatusChip from "./../common/StatusChip";
+import AcceptRequestModal from "./components/AcceptRequestModal";
+import RejectRequestModal from "./components/RejectRequestModal";
+import InformativeDialog from "./../common/InformativeDialog";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -47,18 +49,22 @@ const useStyles = makeStyles({
   },
 });
 
-const SupplyRequests = () => {
+const AdminSupplyRequests = () => {
   const classes = useStyles();
   const { token } = useContext(AuthContext);
 
   const [data, setData] = useState([]);
   const [supplies, setSupplies] = useState([]);
   const [areas, setAreas] = useState([]);
+
+  const [openRejectRequest, setOpenRejectRequest] = useState(false);
+  const [openAcceptRequest, setOpenAcceptRequest] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState({});
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
-  const [erroDialogOpen, setErrorDialogOpen] = useState(false);
+  const [errorDialogOpen, setErrorDialogOpen] = useState(false);
 
   const refreshData = () => {
-    SuppliesRequestService.get(token)
+    AdminSuppliesRequestService.get(token)
       .then((data) => {
         setData(data);
       })
@@ -85,13 +91,30 @@ const SupplyRequests = () => {
       .catch(() => {});
   }, []);
 
-  const cancelRequest = (id) => {
-    SuppliesRequestService.delete(id, token)
+  const reject = (id, reason) => {
+    AdminSuppliesRequestService.reject(id, reason, token)
       .then(() => {
-        setSuccessDialogOpen(true);
+        setOpenRejectRequest(false);
         refreshData();
+        setSuccessDialogOpen(true);
       })
-      .catch(() => setErrorDialogOpen(true));
+      .catch(() => {
+        setOpenRejectRequest(false);
+        setErrorDialogOpen(true);
+      });
+  };
+
+  const approve = (id, reason) => {
+    AdminSuppliesRequestService.approve(id, reason, token)
+      .then(() => {
+        setOpenAcceptRequest(false);
+        refreshData();
+        setSuccessDialogOpen(true);
+      })
+      .catch(() => {
+        setOpenAcceptRequest(false);
+        setErrorDialogOpen(true);
+      });
   };
 
   return (
@@ -104,7 +127,7 @@ const SupplyRequests = () => {
             id="tableTitle"
             component="div"
           >
-            Solicitudes
+            Gestión de solicitudes
           </Typography>
         </Toolbar>
         <TableContainer>
@@ -132,13 +155,30 @@ const SupplyRequests = () => {
                     <StatusChip statusName={row.status} />
                   </StyledTableCell>
                   <StyledTableCell align="left">
-                    <Tooltip title="Cancelar Solicitud">
+                    <Tooltip title="Aceptar">
                       <IconButton
-                        aria-label="delete"
+                        aria-label="accept"
+                        color="primary"
+                        size="small"
+                        disabled={!(row.status === "Pending")}
+                        onClick={() => {
+                          setSelectedRequest(row);
+                          setOpenAcceptRequest(true);
+                        }}
+                      >
+                        <CheckCircle />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Rechazar">
+                      <IconButton
+                        aria-label="reject"
                         color="secondary"
                         size="small"
                         disabled={!(row.status === "Pending")}
-                        onClick={() => cancelRequest(row.id)}
+                        onClick={() => {
+                          setSelectedRequest(row);
+                          setOpenRejectRequest(true);
+                        }}
                       >
                         <Cancel />
                       </IconButton>
@@ -150,18 +190,36 @@ const SupplyRequests = () => {
           </Table>
         </TableContainer>
       </Paper>
+      <AcceptRequestModal
+        open={openAcceptRequest}
+        model={selectedRequest}
+        onClose={() => {
+          refreshData();
+          setOpenAcceptRequest(false);
+        }}
+        onAccept={(id, reason) => approve(id, reason)}
+      />
+      <RejectRequestModal
+        open={openRejectRequest}
+        model={selectedRequest}
+        onClose={() => {
+          refreshData();
+          setOpenRejectRequest(false);
+        }}
+        onAccept={(id, reason) => reject(id, reason)}
+      />
       <InformativeDialog
-        title="Solicitud cancelada"
-        text="Su solicitud fue cancelada exitosamente."
+        title="Acción completada."
+        text=""
         open={successDialogOpen}
         close={() => {
           setSuccessDialogOpen(false);
         }}
       />
       <InformativeDialog
-        title="Solicitud no cancelada"
-        text="Su no pudo ser cancelada."
-        open={erroDialogOpen}
+        title="Ups"
+        text="La acción no pudo ser completada."
+        open={errorDialogOpen}
         close={() => {
           setErrorDialogOpen(false);
         }}
@@ -170,4 +228,4 @@ const SupplyRequests = () => {
   );
 };
 
-export default SupplyRequests;
+export default AdminSupplyRequests;

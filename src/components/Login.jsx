@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-  const { authenticateWith } = useContext(AuthContext);
+  const { authenticateWith, isAdmin } = useContext(AuthContext);
   const [data, setData] = useState({ email: '', pass: '' })
   const [requestStatus, setRequestStatus] = useState({ status: null });
   let history = useHistory();
@@ -50,7 +50,7 @@ export default function SignIn() {
     evt.preventDefault();
     authenticateWith(data)
       .then(() => {
-        history.push("/")
+        isAdmin? history.push('/admin/request-supplies') : history.push('/supply-requests')
       })
       .catch(() => {
         setRequestStatus({ status: 'error' })

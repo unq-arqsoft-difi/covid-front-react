@@ -16,14 +16,16 @@ const SingleSelection = ({ name, label, onChange, service }) => {
   const [options, setOptions] = useState([]);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
+  const fetchOptions = () => {
     service
       .get()
       .then((data) => {
         setOptions(data);
       })
       .catch(() => {});
-  }, []);
+  }
+  
+  useEffect(fetchOptions, []);
 
   const handleClose = () => {
     setOpen(false);

@@ -11,6 +11,7 @@ import {
 import Alert from "@material-ui/lab/Alert";
 import { SuppliesService, AreasService, SuppliesRequestService } from "../services/CommonService";
 import { AuthContext } from "./../contexts/AuthContext";
+import InformativeDialog from './common/InformativeDialog'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,24 +37,25 @@ const SupplyRequest = () => {
 
   const { token } = useContext(AuthContext);
 
-  const [data, setData] = useState({ supply: "", area: "", amount: 0 });
+  const [data, setData] = useState({ supply: '', area: '', amount: 0 });
   const [supplies, setSupplies] = useState([]);
   const [areas, setAreas] = useState([]);
   const [selectedSupply, setSelectedSupply] = useState([]);
-  const [postStatus, setPostStatus] = useState("");
+  const [postStatus, setPostStatus] = useState('');
+  const [errorDialogStatus, setErrorDialogStatus] = useState({open: false, text: ''});
 
   useEffect(() => {
     SuppliesService.get()
       .then((data) => {
         setSupplies(data);
       })
-      .catch(() => alert('Error al buscar los insumos disponibles.'));
-  }, []);
+      .catch(() => setErrorDialogStatus({open: true, text: 'Error inesperado.'}));
+  }, [token]);
 
   useEffect(() => {
     AreasService.get()
       .then((areas) => setAreas(areas))
-      .catch(() => alert('Error al buscar las areas disponibles.'));
+      .catch(() => setErrorDialogStatus({open: true, text: 'Error inesperado.'}));
   }, []);
 
   const handleSupplyChange = (event) => {
@@ -83,6 +85,7 @@ const SupplyRequest = () => {
   };
 
   return (
+    <>
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
@@ -176,6 +179,15 @@ const SupplyRequest = () => {
         </form>
       </div>
     </Container>
+    <InformativeDialog
+        title="Ups"
+        text={errorDialogStatus.text}
+        open={errorDialogStatus.open}
+        close={() => {
+          setErrorDialogStatus({open: false, text: ''});
+        }}
+    />
+    </>
   );
 };
 

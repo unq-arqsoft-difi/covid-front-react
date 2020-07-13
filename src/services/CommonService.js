@@ -105,10 +105,11 @@ const TownsService = {
 const SuppliesRequestService = {
   get: (token) => {
     return new Promise((resolve, reject) => {
-      const config = http.interceptors.request.use((config) => {
-        config.headers.get["Authorization"] = `Bearer ${token}`;
-        return config;
-      });
+      let config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      }
 
       http
         .get("/request-supplies", config)

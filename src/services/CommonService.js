@@ -1,240 +1,158 @@
-import http from "./http-common";
+import http from './http-common';
 
 const ProvincesService = {
-  get: () => {
-    return new Promise((resolve, reject) => {
-      http
-        .get("/support/provinces")
-        .then((response) => {
-          resolve(response.data);
-        })
-        .catch((error) => {
-          if (error.response) {
-            return reject(error.response.data);
-          }
-        });
-    });
-  },
+  get: () => new Promise((resolve, reject) => {
+    http
+      .get('/support/provinces')
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => (error.response ? reject(error.response.data) : reject({})));
+  }),
 };
 
 const AreasService = {
-  get: () => {
-    return new Promise((resolve, reject) => {
-      http
-        .get("/support/areas")
-        .then((response) => {
-          resolve(response.data);
-        })
-        .catch((error) => {
-          if (error.response) {
-            return reject(error.response.data);
-          }
-        });
-    });
-  },
+  get: () => new Promise((resolve, reject) => {
+    http
+      .get('/support/areas')
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => (error.response ? reject(error.response.data) : reject({})));
+  }),
 };
 
 const ProvidersService = {
-  get: () => {
-    return new Promise((resolve, reject) => {
-      http
-        .get("/support/providers")
-        .then((response) => {
-          resolve(response.data);
-        })
-        .catch((error) => {
-          if (error.response) {
-            return reject(error.response.data);
-          }
-        });
-    });
-  },
+  get: () => new Promise((resolve, reject) => {
+    http
+      .get('/support/providers')
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => (error.response ? reject(error.response.data) : reject({})));
+  }),
 };
 
 const SuppliesService = {
-  get: () => {
-    return new Promise((resolve, reject) => {
-      http
-        .get("/support/supplies")
-        .then((response) => {
-          resolve(response.data);
-        })
-        .catch((error) => {
-          if (error.response) {
-            return reject(error.response.data);
-          }
-        });
-    });
-  },
+  get: () => new Promise((resolve, reject) => {
+    http
+      .get('/support/supplies')
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => (error.response ? reject(error.response.data) : reject({})));
+  }),
 };
 
 const InstitutionsService = {
-  get: () => {
-    return new Promise((resolve, reject) => {
-      http
-        .get("/support/institutions")
-        .then((response) => {
-          resolve(response.data);
-        })
-        .catch((error) => {
-          if (error.response) {
-            return reject(error.response.data);
-          }
-        });
-    });
-  },
+  get: () => new Promise((resolve, reject) => {
+    http
+      .get('/support/institutions')
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => (error.response ? reject(error.response.data) : reject({})));
+  }),
 };
 
 const TownsService = {
-  get: (provinceId) => {
-    return new Promise((resolve, reject) => {
-      http
-        .get(`/support/provinces/${provinceId}/towns`)
-        .then((response) => {
-          resolve(response.data);
-        })
-        .catch((error) => {
-          if (error.response) {
-            return reject(error.response.data);
-          }
-        });
-    });
-  },
+  get: (provinceId) => new Promise((resolve, reject) => {
+    http
+      .get(`/support/provinces/${provinceId}/towns`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => (error.response ? reject(error.response.data) : reject({})));
+  }),
 };
 
 const SuppliesRequestService = {
-  get: (token) => {
-    return new Promise((resolve, reject) => {
-      let config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }
-      }
+  get: (token) => new Promise((resolve, reject) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
-      http
-        .get("/request-supplies", config)
-        .then((response) => {
-          resolve(response.data);
-        })
-        .catch((error) => {
-          if (error.response) {
-            reject(error.response.data);
-          }
-        });
+    http
+      .get('/request-supplies', config)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => (error.response ? reject(error.response.data) : reject({})));
+  }),
+
+  post: (supplyRequest, token) => new Promise((resolve, reject) => {
+    const customConfig = http.interceptors.request.use((config) => {
+      config.headers.post.Authorization = `Bearer ${token}`;
+      return config;
     });
-  },
 
-  post: (supplyRequest, token) => {
-    return new Promise((resolve, reject) => {
-      const config = http.interceptors.request.use((config) => {
-        config.headers.post["Authorization"] = `Bearer ${token}`;
-        return config;
-      });
+    http
+      .post(
+        '/request-supplies',
+        {
+          areaId: supplyRequest.area.id,
+          supplyId: supplyRequest.supply.id,
+          amount: supplyRequest.amount,
+        },
+        customConfig,
+      )
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => (error.response ? reject(error.response.data) : reject({})));
+  }),
 
-      http
-        .post(
-          "/request-supplies",
-          {
-            areaId: supplyRequest.area.id,
-            supplyId: supplyRequest.supply.id,
-            amount: supplyRequest.amount,
-          },
-          config
-        )
-        .then((response) => {
-          resolve(response.data);
-        })
-        .catch((error) => {
-          if (error.response) {
-            return reject(error.response.data);
-          }
-        });
+  delete: (supplyRequestId, token) => new Promise((resolve, reject) => {
+    const customConfig = http.interceptors.request.use((config) => {
+      config.headers.delete.Authorization = `Bearer ${token}`;
+      return config;
     });
-  },
 
-  delete: (supplyRequestId, token) => {
-    return new Promise((resolve, reject) => {
-      const config = http.interceptors.request.use((config) => {
-        config.headers.delete["Authorization"] = `Bearer ${token}`;
-        return config;
-      });
-
-      http
-        .delete(`/request-supplies/${supplyRequestId}`, config)
-        .then((response) => {
-          resolve(response.data);
-        })
-        .catch((error) => {
-          if (error.response) {
-            return reject(error.response.data);
-          }
-        });
-    });
-  },
+    http
+      .delete(`/request-supplies/${supplyRequestId}`, customConfig)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => (error.response ? reject(error.response.data) : reject({})));
+  }),
 };
 
 const AdminSuppliesRequestService = {
-  get: (token) => {
-    return new Promise((resolve, reject) => {
-      const config = http.interceptors.request.use((config) => {
-        config.headers.get["Authorization"] = `Bearer ${token}`;
-        return config;
-      });
-
-      http
-        .get("/admin/request-supplies", config)
-        .then((response) => {
-          return resolve(response.data);
-        })
-        .catch((error) => {
-          if (error.response) {
-            return reject(error.response.data);
-          }
-        });
+  get: (token) => new Promise((resolve, reject) => {
+    const customConfig = http.interceptors.request.use((config) => {
+      config.headers.get.Authorization = `Bearer ${token}`;
+      return config;
     });
-  },
 
-  reject: (id, reason, token) => {
-    return new Promise((resolve, reject) => {
-      const config = http.interceptors.request.use((config) => {
-        config.headers.put["Authorization"] = `Bearer ${token}`;
-        return config;
-      });
-      http
-        .put(`/admin/request-supplies/${id}/reject`, {reason: reason}, config)
-        .then((response) => {
-          return resolve(response.data);
-        })
-        .catch((error) => {
-          if (error.response) {
-            return reject(error.response.data);
-          }
-        });
-    });
-  },
+    http
+      .get('/admin/request-supplies', customConfig)
+      .then((response) => resolve(response.data))
+      .catch((error) => (error.response ? reject(error.response.data) : reject({})));
+  }),
 
-  approve: (id, providerId, token) => {
-    return new Promise((resolve, reject) => {
-      const config = http.interceptors.request.use((config) => {
-        config.headers.put["Authorization"] = `Bearer ${token}`;
-        return config;
-      });
-      http
-        .put(
-          `/admin/request-supplies/${id}/approve`,
-          { providerId: providerId },
-          config
-        )
-        .then((response) => {
-          return resolve(response.data);
-        })
-        .catch((error) => {
-          if (error.response) {
-            return reject(error.response.data);
-          }
-        });
+  reject: (id, reason, token) => new Promise((resolve, reject) => {
+    const customConfig = http.interceptors.request.use((config) => {
+      config.headers.put.Authorization = `Bearer ${token}`;
+      return config;
     });
-  },
+    http
+      .put(`/admin/request-supplies/${id}/reject`, { reason }, customConfig)
+      .then((response) => resolve(response.data))
+      .catch((error) => (error.response ? reject(error.response.data) : reject({})));
+  }),
+
+  approve: (id, providerId, token) => new Promise((resolve, reject) => {
+    const customConfig = http.interceptors.request.use((config) => {
+      config.headers.put.Authorization = `Bearer ${token}`;
+      return config;
+    });
+    http
+      .put(`/admin/request-supplies/${id}/approve`, { providerId }, customConfig)
+      .then((response) => resolve(response.data))
+      .catch((error) => (error.response ? reject(error.response.data) : reject({})));
+  }),
 };
 
 export {

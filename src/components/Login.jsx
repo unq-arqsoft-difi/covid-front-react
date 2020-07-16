@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext } from 'react';
 import {
   Avatar,
   Button,
@@ -6,13 +6,13 @@ import {
   Grid,
   Link,
   TextField,
-  Typography
+  Typography,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import { AuthContext } from '../contexts/AuthContext'
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,24 +37,22 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const classes = useStyles();
   const { authenticateWith, isAdmin } = useContext(AuthContext);
-  const [data, setData] = useState({ email: '', pass: '' })
+  const [data, setData] = useState({ email: '', pass: '' });
   const [requestStatus, setRequestStatus] = useState({ status: null });
-  let history = useHistory();
+  const history = useHistory();
   const handleInputChange = (event) => {
     setData({
       ...data,
-      [event.target.name]: event.target.value
-    })
+      [event.target.name]: event.target.value,
+    });
   };
   const handleSubmit = (evt) => {
     evt.preventDefault();
     authenticateWith(data)
-      .then(() => {
-        isAdmin? history.push('/admin/request-supplies') : history.push('/supply-requests')
-      })
+      .then(() => ((isAdmin) ? history.push('/admin/request-supplies') : history.push('/supply-requests')))
       .catch(() => {
-        setRequestStatus({ status: 'error' })
-      })
+        setRequestStatus({ status: 'error' });
+      });
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -65,20 +63,23 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Ingresar
         </Typography>
-        {requestStatus.status === 'success' &&
+        {requestStatus.status === 'success'
+          && (
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Alert className={classes.alert} severity="success">Credenciales correctas. Token obtenido.</Alert>
             </Grid>
           </Grid>
-        }
+          )}
         {
-          requestStatus.status === 'error' &&
+          requestStatus.status === 'error'
+          && (
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Alert className={classes.alert} severity="error">Email o contraseña incorrectos.</Alert>
             </Grid>
           </Grid>
+          )
         }
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
@@ -117,12 +118,12 @@ export default function SignIn() {
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="/register" variant="body2">
-                {"¿No tenes cuenta? Registrate"}
+                ¿No tenes cuenta? Registrate
               </Link>
             </Grid>
           </Grid>
         </form>
-      </div >
-    </Container >
+      </div>
+    </Container>
   );
 }

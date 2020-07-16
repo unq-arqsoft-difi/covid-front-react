@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import { InputLabel, MenuItem, Select } from "@material-ui/core";
-import { TownsService } from "../../services/CommonService";
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import { InputLabel, MenuItem, Select } from '@material-ui/core';
+import { TownsService } from '../../services/CommonService';
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    display: "block",
+    display: 'block',
     marginTop: theme.spacing(2),
   },
 }));
 
-const TownSelection = ({ name, label, onChange, provinceId }) => {
+const TownSelection = ({
+  name, label, onChange, provinceId,
+}) => {
   useStyles();
-  const [selection, setSelection] = useState("");
+  const [selection, setSelection] = useState('');
   const [options, setOptions] = useState([]);
   const [open, setOpen] = useState(false);
 
@@ -75,8 +77,10 @@ TownSelection.propTypes = {
 };
 
 TownSelection.defaultProps = {
-  name: "town-selection",
-  label: "Localidad",
+  name: 'town-selection',
+  label: 'Localidad',
+  onChange: () => {},
+  provinceId: 0,
 };
 
 export default TownSelection;

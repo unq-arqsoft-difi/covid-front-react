@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import { InputLabel, MenuItem, Select } from "@material-ui/core";
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import { InputLabel, MenuItem, Select } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    display: "block",
+    display: 'block',
     marginTop: theme.spacing(2),
   },
 }));
 
-const SingleSelection = ({ name, label, onChange, service }) => {
+const SingleSelection = ({
+  name, label, onChange, service,
+}) => {
   useStyles();
-  const [selection, setSelection] = useState("");
+  const [selection, setSelection] = useState('');
   const [options, setOptions] = useState([]);
   const [open, setOpen] = useState(false);
 
@@ -23,8 +25,8 @@ const SingleSelection = ({ name, label, onChange, service }) => {
         setOptions(data);
       })
       .catch(() => {});
-  }
-  
+  };
+
   useEffect(fetchOptions, []);
 
   const handleClose = () => {
@@ -67,10 +69,10 @@ const SingleSelection = ({ name, label, onChange, service }) => {
 };
 
 SingleSelection.propTypes = {
-  name: PropTypes.string,
-  label: PropTypes.string,
-  onChange: PropTypes.func,
-  service: PropTypes.object,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  service: PropTypes.PropTypes.shape({ get: PropTypes.func.isRequired }).isRequired,
 };
 
 export default SingleSelection;

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Avatar,
   Button,
@@ -10,52 +10,51 @@ import {
   Typography,
   List,
   ListItem,
-} from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Alert from "@material-ui/lab/Alert";
-import UsersService from "../services/UsersService";
-import { useHistory } from "react-router-dom";
-import SingleSelection from "./common/SingleSelection";
-import TownSelection from "./common/TownSelection";
-import { InstitutionsService } from "../services/CommonService";
-import { ProvincesService } from "../services/CommonService";
+} from '@material-ui/core';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Alert from '@material-ui/lab/Alert';
+import { useHistory } from 'react-router-dom';
+import UsersService from '../services/UsersService';
+import SingleSelection from './common/SingleSelection';
+import TownSelection from './common/TownSelection';
+import { InstitutionsService, ProvincesService } from '../services/CommonService';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
   alert: {
-    width: "100%",
+    width: '100%',
   },
 }));
 
 export default function SignUp() {
   const classes = useStyles();
-  let history = useHistory();
+  const history = useHistory();
   const emptyData = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    job: "",
-    pass: "",
-    institutionId: "",
-    provinceId: "",
-    townId: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    job: '',
+    pass: '',
+    institutionId: '',
+    provinceId: '',
+    townId: '',
   };
   const [data, setData] = useState(emptyData);
   const [requestStatus, setRequestStatus] = useState({
@@ -72,10 +71,10 @@ export default function SignUp() {
     evt.preventDefault();
     UsersService.post(data)
       .then(() => {
-        history.push("/login");
+        history.push('/login');
       })
       .catch((body) => {
-        setRequestStatus({ status: "error", description: body.errors });
+        setRequestStatus({ status: 'error', description: body.errors });
       });
   };
 
@@ -88,7 +87,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Registrarse
         </Typography>
-        {requestStatus.status === "error" && (
+        {requestStatus.status === 'error' && (
           <Alert className={classes.alert} severity="error">
             <List>
               {requestStatus.description.map((item, index) => (
@@ -97,7 +96,7 @@ export default function SignUp() {
             </List>
           </Alert>
         )}
-        {requestStatus === "success" && (
+        {requestStatus === 'success' && (
           <Alert className={classes.alert} severity="success">
             This is a success alert — check it out!
           </Alert>

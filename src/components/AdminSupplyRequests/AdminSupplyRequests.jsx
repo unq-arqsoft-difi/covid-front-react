@@ -74,7 +74,7 @@ const AdminSupplyRequests = () => {
   useEffect(refreshData, [token]);
 
   const arrayToObject = (array) => array.reduce((obj, item) => {
-    obj[item.id] = item.name;
+    obj.push(item.id, item.name);
     return obj;
   }, {});
 

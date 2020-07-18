@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import React, { useState, useEffect, useContext } from 'react';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {
   IconButton,
   Paper,
@@ -12,16 +12,16 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-} from "@material-ui/core";
+} from '@material-ui/core';
+import { Cancel } from '@material-ui/icons';
 import {
   SuppliesService,
   AreasService,
   SuppliesRequestService,
-} from "../../services/CommonService";
-import { Cancel } from "@material-ui/icons";
-import { AuthContext } from "../../contexts/AuthContext";
-import InformativeDialog from "./../common/InformativeDialog";
-import StatusChip from "./../common/StatusChip";
+} from '../../services/CommonService';
+import { AuthContext } from '../../contexts/AuthContext';
+import InformativeDialog from '../common/InformativeDialog';
+import StatusChip from '../common/StatusChip';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -35,7 +35,7 @@ const StyledTableCell = withStyles((theme) => ({
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
-    "&:nth-of-type(odd)": {
+    '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,
     },
   },
@@ -59,29 +59,28 @@ const SupplyRequests = () => {
 
   const refreshData = () => {
     SuppliesRequestService.get(token)
-      .then((data) => {
-        setData(data);
+      .then((responseData) => {
+        setData(responseData);
       })
       .catch(() => {});
   };
 
   useEffect(refreshData, [token]);
 
-  const arrayToObject = (array) =>
-    array.reduce((obj, item) => {
-      obj[item["id"]] = item.name;
-      return obj;
-    }, {});
+  const arrayToObject = (array) => array.reduce((obj, item) => {
+    obj.push(item.id, item.name);
+    return obj;
+  }, {});
 
   useEffect(() => {
     SuppliesService.get()
-      .then((supplies) => setSupplies(arrayToObject(supplies)))
+      .then((responseData) => setSupplies(arrayToObject(responseData)))
       .catch(() => {});
   }, []);
 
   useEffect(() => {
     AreasService.get()
-      .then((areas) => setAreas(arrayToObject(areas)))
+      .then((responseData) => setAreas(arrayToObject(responseData)))
       .catch(() => {});
   }, []);
 
@@ -137,7 +136,7 @@ const SupplyRequests = () => {
                         aria-label="delete"
                         color="secondary"
                         size="small"
-                        disabled={!(row.status === "Pending")}
+                        disabled={!(row.status === 'Pending')}
                         onClick={() => cancelRequest(row.id)}
                       >
                         <Cancel />

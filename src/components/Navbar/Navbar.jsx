@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
 import {
   AppBar,
   Button,
@@ -13,16 +13,17 @@ import {
   makeStyles,
   Toolbar,
   Typography,
-} from "@material-ui/core/";
-import { Menu } from "@material-ui/icons";
+} from '@material-ui/core/';
 import {
+  Menu,
   LocalHospital,
   Archive,
   AssignmentTurnedIn,
-} from "@material-ui/icons/";
-import { Link } from "react-router-dom";
-import { AuthContext } from "./../../contexts/AuthContext";
-import MobileMenu from "./components/MobileMenu";
+} from '@material-ui/icons';
+
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
+import MobileMenu from './components/MobileMenu';
 
 const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.toolbar,
@@ -36,9 +37,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   sectionDesktop: {
-    display: "none",
-    [theme.breakpoints.up("md")]: {
-      display: "flex",
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
     },
   },
 }));
@@ -50,8 +51,8 @@ export default function PrimarySearchAppBar() {
 
   const toggleDrawer = (open) => (event) => {
     if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
+      event.type === 'keydown'
+      && (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }

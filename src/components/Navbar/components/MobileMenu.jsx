@@ -1,23 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
 import {
   makeStyles,
   Button,
   Menu,
   IconButton,
   MenuItem,
-} from "@material-ui/core/";
-import MoreIcon from "@material-ui/icons/MoreVert";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../../contexts/AuthContext";
+} from '@material-ui/core/';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
   sectionMobile: {
-    display: "flex",
-    [theme.breakpoints.up("md")]: {
-      display: "none",
+    display: 'flex',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
     },
   },
 }));
@@ -33,19 +33,33 @@ const MobileMenu = () => {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-  const mobileMenuId = "primary-account-menu-mobile";
-  const RenderMobileMenu = () => {
-    return (
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        id={mobileMenuId}
-        keepMounted
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
-        open={isMobileMenuOpen}
-        onClose={handleMobileMenuClose}
-      >
-        {isAuthenticated ? (
+  const mobileMenuId = 'primary-account-menu-mobile';
+  const RenderMobileMenu = () => (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      {isAuthenticated ? (
+        <MenuItem>
+          <Button
+            aria-label="account of current user"
+            aria-controls="primary-account-menu"
+            aria-haspopup="true"
+            color="inherit"
+            component={Link}
+            onClick={logOut}
+            to="/"
+          >
+            Salir
+          </Button>
+        </MenuItem>
+      ) : (
+        <>
           <MenuItem>
             <Button
               aria-label="account of current user"
@@ -53,43 +67,27 @@ const MobileMenu = () => {
               aria-haspopup="true"
               color="inherit"
               component={Link}
-              onClick={logOut}
-              to="/"
+              to="/register"
             >
-              Salir
+              Registrarse
             </Button>
           </MenuItem>
-        ) : (
-          <>
-            <MenuItem>
-              <Button
-                aria-label="account of current user"
-                aria-controls="primary-account-menu"
-                aria-haspopup="true"
-                color="inherit"
-                component={Link}
-                to="/register"
-              >
-                Registrarse
-              </Button>
-            </MenuItem>
-            <MenuItem onClick={null}>
-              <Button
-                aria-label="account of current user"
-                aria-controls="primary-account-menu"
-                aria-haspopup="true"
-                color="inherit"
-                component={Link}
-                to="/login"
-              >
-                Ingresar
-              </Button>
-            </MenuItem>
-          </>
-        )}
-      </Menu>
-    );
-  };
+          <MenuItem onClick={null}>
+            <Button
+              aria-label="account of current user"
+              aria-controls="primary-account-menu"
+              aria-haspopup="true"
+              color="inherit"
+              component={Link}
+              to="/login"
+            >
+              Ingresar
+            </Button>
+          </MenuItem>
+        </>
+      )}
+    </Menu>
+  );
   return (
     <div className={classes.sectionMobile}>
       <IconButton

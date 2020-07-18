@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import React, { useState, useEffect, useContext } from 'react';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {
   IconButton,
   Paper,
@@ -12,18 +12,18 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-} from "@material-ui/core";
+} from '@material-ui/core';
+import { Cancel, CheckCircle } from '@material-ui/icons';
 import {
   AdminSuppliesRequestService,
   AreasService,
   SuppliesService,
-} from "../../services/CommonService";
-import { Cancel, CheckCircle } from "@material-ui/icons";
-import { AuthContext } from "../../contexts/AuthContext";
-import StatusChip from "./../common/StatusChip";
-import AcceptRequestModal from "./components/AcceptRequestModal";
-import RejectRequestModal from "./components/RejectRequestModal";
-import InformativeDialog from "./../common/InformativeDialog";
+} from '../../services/CommonService';
+import { AuthContext } from '../../contexts/AuthContext';
+import StatusChip from '../common/StatusChip';
+import AcceptRequestModal from './components/AcceptRequestModal';
+import RejectRequestModal from './components/RejectRequestModal';
+import InformativeDialog from '../common/InformativeDialog';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -37,7 +37,7 @@ const StyledTableCell = withStyles((theme) => ({
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
-    "&:nth-of-type(odd)": {
+    '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,
     },
   },
@@ -65,29 +65,28 @@ const AdminSupplyRequests = () => {
 
   const refreshData = () => {
     AdminSuppliesRequestService.get(token)
-      .then((data) => {
-        setData(data);
+      .then((response) => {
+        setData(response);
       })
       .catch(() => {});
   };
 
   useEffect(refreshData, [token]);
 
-  const arrayToObject = (array) =>
-    array.reduce((obj, item) => {
-      obj[item["id"]] = item.name;
-      return obj;
-    }, {});
+  const arrayToObject = (array) => array.reduce((obj, item) => {
+    obj.push(item.id, item.name);
+    return obj;
+  }, {});
 
   useEffect(() => {
     SuppliesService.get()
-      .then((supplies) => setSupplies(arrayToObject(supplies)))
+      .then((response) => setSupplies(arrayToObject(response)))
       .catch(() => {});
   }, []);
 
   useEffect(() => {
     AreasService.get()
-      .then((areas) => setAreas(arrayToObject(areas)))
+      .then((response) => setAreas(arrayToObject(response)))
       .catch(() => {});
   }, []);
 
@@ -160,7 +159,7 @@ const AdminSupplyRequests = () => {
                         aria-label="accept"
                         color="primary"
                         size="small"
-                        disabled={!(row.status === "Pending")}
+                        disabled={!(row.status === 'Pending')}
                         onClick={() => {
                           setSelectedRequest(row);
                           setOpenAcceptRequest(true);
@@ -174,7 +173,7 @@ const AdminSupplyRequests = () => {
                         aria-label="reject"
                         color="secondary"
                         size="small"
-                        disabled={!(row.status === "Pending")}
+                        disabled={!(row.status === 'Pending')}
                         onClick={() => {
                           setSelectedRequest(row);
                           setOpenRejectRequest(true);

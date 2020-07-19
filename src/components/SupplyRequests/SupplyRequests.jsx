@@ -132,15 +132,17 @@ const SupplyRequests = () => {
                   </StyledTableCell>
                   <StyledTableCell align="left">
                     <Tooltip title="Cancelar Solicitud">
-                      <IconButton
-                        aria-label="delete"
-                        color="secondary"
-                        size="small"
-                        disabled={!(row.status === 'Pending')}
-                        onClick={() => cancelRequest(row.id)}
-                      >
-                        <Cancel />
-                      </IconButton>
+                      <span>
+                        <IconButton
+                          aria-label="delete"
+                          color="secondary"
+                          size="small"
+                          disabled={!(row.status === 'Pending')}
+                          onClick={() => cancelRequest(row.id)}
+                        >
+                          <Cancel />
+                        </IconButton>
+                      </span>
                     </Tooltip>
                   </StyledTableCell>
                 </StyledTableRow>

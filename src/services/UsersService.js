@@ -15,4 +15,4 @@ const UsersService = {
   }),
 };
 
-export default new UsersService();
+export default UsersService;

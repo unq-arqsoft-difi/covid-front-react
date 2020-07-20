@@ -14,11 +14,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Cancel } from '@material-ui/icons';
-import {
-  SuppliesService,
-  AreasService,
-  SuppliesRequestService,
-} from '../../services/CommonService';
+import { SuppliesRequestService } from '../../services/CommonService';
 import { AuthContext } from '../../contexts/AuthContext.jsx';
 import InformativeDialog from '../common/InformativeDialog.jsx';
 import StatusChip from '../common/StatusChip.jsx';
@@ -52,8 +48,6 @@ const SupplyRequests = () => {
   const { token } = useContext(AuthContext);
 
   const [data, setData] = useState([]);
-  const [supplies, setSupplies] = useState([]);
-  const [areas, setAreas] = useState([]);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [erroDialogOpen, setErrorDialogOpen] = useState(false);
 
@@ -64,23 +58,6 @@ const SupplyRequests = () => {
   };
 
   useEffect(refreshData, [token]);
-
-  const arrayToObject = array => array.reduce((obj, item) => {
-    obj.push(item.id, item.name);
-    return obj;
-  }, {});
-
-  useEffect(() => {
-    SuppliesService.get()
-      .then(responseData => setSupplies(arrayToObject(responseData)))
-      .catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    AreasService.get()
-      .then(responseData => setAreas(arrayToObject(responseData)))
-      .catch(() => {});
-  }, []);
 
   const cancelRequest = (id) => {
     SuppliesRequestService.delete(id, token)
@@ -118,24 +95,20 @@ const SupplyRequests = () => {
             <TableBody>
               {data.map(row => (
                 <StyledTableRow key={row.id}>
-                  <StyledTableCell component="th" scope="row">
-                    {supplies[row.supplyId]}
-                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">{row.supply.name}</StyledTableCell>
                   <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                  <StyledTableCell align="left">
-                    {areas[row.areaId]}
-                  </StyledTableCell>
+                  <StyledTableCell align="left">{row.area.name}</StyledTableCell>
                   <StyledTableCell align="left">
                     <StatusChip statusName={row.status} />
                   </StyledTableCell>
                   <StyledTableCell align="left">
-                    <Tooltip title="Cancelar Solicitud">
+                    <Tooltip title={row.status === 'Pending' ? 'Cancelar Solicitud' : 'Ya no se puede Cancelar'}>
                       <span>
                         <IconButton
                           aria-label="delete"
                           color="secondary"
                           size="small"
-                          disabled={!(row.status === 'Pending')}
+                          disabled={row.status !== 'Pending'}
                           onClick={() => cancelRequest(row.id)}
                         >
                           <Cancel />
@@ -153,17 +126,13 @@ const SupplyRequests = () => {
         title="Solicitud cancelada"
         text="Su solicitud fue cancelada exitosamente."
         open={successDialogOpen}
-        close={() => {
-          setSuccessDialogOpen(false);
-        }}
+        close={() => setSuccessDialogOpen(false)}
       />
       <InformativeDialog
         title="Solicitud no cancelada"
         text="Su no pudo ser cancelada."
         open={erroDialogOpen}
-        close={() => {
-          setErrorDialogOpen(false);
-        }}
+        close={() => setErrorDialogOpen(false)}
       />
     </>
   );

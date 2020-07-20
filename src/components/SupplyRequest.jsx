@@ -36,7 +36,7 @@ const SupplyRequest = () => {
 
   const [areas, setAreas] = useState([]);
   const [supplies, setSupplies] = useState([]);
-  const [amountValue, setAmountValue] = useState('');
+  const [amountValue, setAmountValue] = useState(0);
   const [areaValue, setAreaValue] = useState('');
   const [areaInputValue, setAreaInputValue] = useState('');
   const [supplyValue, setSupplyValue] = useState('');
@@ -64,7 +64,7 @@ const SupplyRequest = () => {
         setPostStatus('success');
         setAreaValue('');
         setSupplyValue('');
-        setAmountValue('');
+        setAmountValue(0);
       })
       .catch(setError);
   };
@@ -90,9 +90,8 @@ const SupplyRequest = () => {
                   id="area"
                   options={areas}
                   getOptionLabel={area => area.name || ''}
-                  required
                   fullWidth
-                  renderInput={params => <TextField {...params} label="Insumos" margin="normal" />}
+                  renderInput={params => <TextField {...params} label="Áreas" margin="normal" />}
                 />
                 <Autocomplete
                   value={supplyValue}
@@ -102,20 +101,18 @@ const SupplyRequest = () => {
                   id="supply"
                   options={supplies}
                   getOptionLabel={supply => supply.name || ''}
-                  required
                   fullWidth
                   renderInput={params => <TextField {...params} label="Insumos" margin="normal" />}
                 />
                 <TextField
                   id="amount"
-                  name="amount"
-                  type="number"
-                  inputProps={{ min: 1, max: 1000 }}
-                  required
-                  fullWidth
                   label="Cantidad"
+                  type="number"
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  inputProps={{ min: 1, max: 1000 }}
                   value={amountValue}
-                  onChange={(event, newValue) => setAmountValue(newValue)}
+                  onChange={event => setAmountValue(event.target.value)}
                 />
                 <Button
                   type="submit"

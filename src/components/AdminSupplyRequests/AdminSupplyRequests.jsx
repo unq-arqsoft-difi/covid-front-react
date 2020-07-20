@@ -120,6 +120,8 @@ const AdminSupplyRequests = () => {
                 <StyledTableCell>Insumo</StyledTableCell>
                 <StyledTableCell align="right">Cantidad</StyledTableCell>
                 <StyledTableCell align="left">Area</StyledTableCell>
+                <StyledTableCell align="left">Persona</StyledTableCell>
+                <StyledTableCell align="left">Rol</StyledTableCell>
                 <StyledTableCell align="left">Estado</StyledTableCell>
                 <StyledTableCell align="left">Acciones</StyledTableCell>
               </StyledTableRow>
@@ -134,12 +136,12 @@ const AdminSupplyRequests = () => {
                     {row.supply.name}
                   </StyledTableCell>
                   <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                  <StyledTableCell align="left">
-                    {row.area.name}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
-                    <StatusChip statusName={row.status} />
-                  </StyledTableCell>
+                  <StyledTableCell align="left"> {row.area.name} </StyledTableCell>
+                  <StyledTableCell align="left"> <StatusChip statusName={row.status} /> </StyledTableCell>
+                  <StyledTableCell align="left">{row.area.name}</StyledTableCell>
+                  <StyledTableCell align="left">{`${row.user.firstName}${row.user.lastName}`}</StyledTableCell>
+                  <StyledTableCell align="left">{row.user.job}</StyledTableCell>
+                  <StyledTableCell align="left"><StatusChip statusName={row.status} /></StyledTableCell>
                   <StyledTableCell align="left">
                     <Tooltip title="Aceptar">
                       <span>

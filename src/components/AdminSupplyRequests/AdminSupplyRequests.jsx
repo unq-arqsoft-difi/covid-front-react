@@ -92,7 +92,7 @@ const AdminSupplyRequests = () => {
         setErrorDialogOpen(true);
       });
   };
-  const f = n => (n < 10 ? n : `0${n}`);
+  const f = n => String("00" + n).slice(-2);
   const formatDate = date => `${f(date.getUTCDate())}/${f(
     date.getUTCMonth() + 1,
   )}/${date.getUTCFullYear()}  ${f(date.getUTCHours())}:${f(

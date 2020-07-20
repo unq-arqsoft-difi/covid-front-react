@@ -137,8 +137,6 @@ const AdminSupplyRequests = () => {
                   </StyledTableCell>
                   <StyledTableCell align="right">{row.amount}</StyledTableCell>
                   <StyledTableCell align="left"> {row.area.name} </StyledTableCell>
-                  <StyledTableCell align="left"> <StatusChip statusName={row.status} /> </StyledTableCell>
-                  <StyledTableCell align="left">{row.area.name}</StyledTableCell>
                   <StyledTableCell align="left">{`${row.user.firstName}${row.user.lastName}`}</StyledTableCell>
                   <StyledTableCell align="left">{row.user.job}</StyledTableCell>
                   <StyledTableCell align="left"><StatusChip statusName={row.status} /></StyledTableCell>

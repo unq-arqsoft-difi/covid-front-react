@@ -27,7 +27,7 @@ const RejectRequestModal = ({
           name="reject-rReason"
           label="Motivo del rechazo"
           type="string"
-          onChange={(event) => setRejectReason(event.target.value)}
+          onChange={event => setRejectReason(event.target.value)}
           fullWidth
         />
       </DialogContent>

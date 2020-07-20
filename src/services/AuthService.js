@@ -1,7 +1,7 @@
 import http from './http-common';
 
 const AuthService = {
-  post: (user) => new Promise((resolve, reject) => {
+  post: user => new Promise((resolve, reject) => {
     http
       .post('/login', user)
       .then((response) => {

@@ -1,21 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
-import {
-  Grid,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  DialogContentText,
-} from '@material-ui/core';
-import SingleSelection from '../../common/SingleSelection';
+import TextField from '@material-ui/core/TextField';
+
 import { ProvidersService } from '../../../services/CommonService';
 
 const AcceptRequestModal = ({
   open, model, onClose, onAccept,
 }) => {
-  const [provider, setProvider] = useState([]);
+  const [providers, setProviders] = useState([]);
+  const [providerValue, setProviderValue] = useState('');
+  const [providerInputValue, setProviderInputValue] = useState('');
+
+  useEffect(() => {
+    ProvidersService.get().then(data => setProviders(data));
+  }, []);
 
   return (
     <Dialog onClose={onClose} aria-labelledby="accept-request" open={open}>
@@ -26,12 +32,17 @@ const AcceptRequestModal = ({
         </DialogContentText>
         <Grid container>
           <Grid item xs={12}>
-            <SingleSelection
-              name="supplyProvider"
-              label="Proveedor asignado"
-              service={ProvidersService}
-              onChange={(event) => setProvider(event.target.value.id)}
-            />
+          <Autocomplete
+            value={providerValue}
+            onChange={(event, newValue) => setProviderValue(newValue)}
+            inputValue={providerInputValue}
+            onInputChange={(event, newInputValue) => setProviderInputValue(newInputValue)}
+            id="provider"
+            options={providers}
+            getOptionLabel={item => item.name || ''}
+            fullWidth
+            renderInput={params => <TextField {...params} label="Proveedor Asignado" />}
+          />
           </Grid>
         </Grid>
       </DialogContent>
@@ -39,7 +50,7 @@ const AcceptRequestModal = ({
         <Button autoFocus onClick={onClose}>
           Cancelar
         </Button>
-        <Button autoFocus onClick={() => onAccept(model.id, provider.id)} color="primary">
+        <Button autoFocus onClick={() => onAccept(model.id, providerValue.id)} color="primary">
           Aceptar
         </Button>
       </DialogActions>

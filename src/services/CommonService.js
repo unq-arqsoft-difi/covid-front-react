@@ -7,7 +7,7 @@ const ProvincesService = {
       .then((response) => {
         resolve(response.data);
       })
-      .catch((error) => (error.response ? reject(error.response.data) : reject(Error('Unexpected error on api'))));
+      .catch(error => (error.response ? reject(error.response.data) : reject(error)));
   }),
 };
 
@@ -18,7 +18,7 @@ const AreasService = {
       .then((response) => {
         resolve(response.data);
       })
-      .catch((error) => (error.response ? reject(error.response.data) : reject(Error('Unexpected error on api'))));
+      .catch(error => (error.response ? reject(error.response.data) : reject(error)));
   }),
 };
 
@@ -29,7 +29,7 @@ const ProvidersService = {
       .then((response) => {
         resolve(response.data);
       })
-      .catch((error) => (error.response ? reject(error.response.data) : reject(Error('Unexpected error on api'))));
+      .catch(error => (error.response ? reject(error.response.data) : reject(error)));
   }),
 };
 
@@ -40,7 +40,7 @@ const SuppliesService = {
       .then((response) => {
         resolve(response.data);
       })
-      .catch((error) => (error.response ? reject(error.response.data) : reject(Error('Unexpected error on api'))));
+      .catch(error => (error.response ? reject(error.response.data) : reject(error)));
   }),
 };
 
@@ -51,23 +51,23 @@ const InstitutionsService = {
       .then((response) => {
         resolve(response.data);
       })
-      .catch((error) => (error.response ? reject(error.response.data) : reject(Error('Unexpected error on api'))));
+      .catch(error => (error.response ? reject(error.response.data) : reject(error)));
   }),
 };
 
 const TownsService = {
-  get: (provinceId) => new Promise((resolve, reject) => {
+  get: provinceId => new Promise((resolve, reject) => {
     http
       .get(`/support/provinces/${provinceId}/towns`)
       .then((response) => {
         resolve(response.data);
       })
-      .catch((error) => (error.response ? reject(error.response.data) : reject(Error('Unexpected error on api'))));
+      .catch(error => (error.response ? reject(error.response.data) : reject(error)));
   }),
 };
 
 const SuppliesRequestService = {
-  get: (token) => new Promise((resolve, reject) => {
+  get: token => new Promise((resolve, reject) => {
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -79,14 +79,14 @@ const SuppliesRequestService = {
       .then((response) => {
         resolve(response.data);
       })
-      .catch((error) => (error.response ? reject(error.response.data) : reject(Error('Unexpected error on api'))));
+      .catch(error => (error.response ? reject(error.response.data) : reject(error)));
   }),
 
   post: (supplyRequest, token) => new Promise((resolve, reject) => {
     const customConfig = http.interceptors.request.use((config) => {
-      const updatedConfgi = config;
-      updatedConfgi.headers.post.Authorization = `Bearer ${token}`;
-      return updatedConfgi;
+      const updatedConfig = config;
+      updatedConfig.headers.post.Authorization = `Bearer ${token}`;
+      return updatedConfig;
     });
 
     http
@@ -102,7 +102,7 @@ const SuppliesRequestService = {
       .then((response) => {
         resolve(response.data);
       })
-      .catch((error) => (error.response ? reject(error.response.data) : reject(Error('Unexpected error on api'))));
+      .catch(error => (error.response ? reject(error.response.data) : reject(error)));
   }),
 
   delete: (supplyRequestId, token) => new Promise((resolve, reject) => {
@@ -117,12 +117,12 @@ const SuppliesRequestService = {
       .then((response) => {
         resolve(response.data);
       })
-      .catch((error) => (error.response ? reject(error.response.data) : reject(Error('Unexpected error on api'))));
+      .catch(error => (error.response ? reject(error.response.data) : reject(error)));
   }),
 };
 
 const AdminSuppliesRequestService = {
-  get: (token) => new Promise((resolve, reject) => {
+  get: token => new Promise((resolve, reject) => {
     const customConfig = http.interceptors.request.use((config) => {
       const updatedConfig = config;
       updatedConfig.headers.get.Authorization = `Bearer ${token}`;
@@ -131,20 +131,20 @@ const AdminSuppliesRequestService = {
 
     http
       .get('/admin/request-supplies', customConfig)
-      .then((response) => resolve(response.data))
-      .catch((error) => (error.response ? reject(error.response.data) : reject(Error('Unexpected error on api'))));
+      .then(response => resolve(response.data))
+      .catch(error => (error.response ? reject(error.response.data) : reject(error)));
   }),
 
   reject: (id, reason, token) => new Promise((resolve, reject) => {
     const customConfig = http.interceptors.request.use((config) => {
       const updatedConfig = config;
-      updatedConfig.put.Authorization = `Bearer ${token}`;
+      updatedConfig.headers.put.Authorization = `Bearer ${token}`;
       return updatedConfig;
     });
     http
       .put(`/admin/request-supplies/${id}/reject`, { reason }, customConfig)
-      .then((response) => resolve(response.data))
-      .catch((error) => (error.response ? reject(error.response.data) : reject(Error('Unexpected error on api'))));
+      .then(response => resolve(response.data))
+      .catch(error => (error.response ? reject(error.response.data) : reject(error)));
   }),
 
   approve: (id, providerId, token) => new Promise((resolve, reject) => {
@@ -155,8 +155,8 @@ const AdminSuppliesRequestService = {
     });
     http
       .put(`/admin/request-supplies/${id}/approve`, { providerId }, customConfig)
-      .then((response) => resolve(response.data))
-      .catch((error) => (error.response ? reject(error.response.data) : reject(Error('Unexpected error on api'))));
+      .then(response => resolve(response.data))
+      .catch(error => (error.response ? reject(error.response.data) : reject(error)));
   }),
 };
 

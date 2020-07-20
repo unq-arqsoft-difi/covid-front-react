@@ -12,9 +12,9 @@ import Alert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../contexts/AuthContext.jsx';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-  const { authenticateWith, isAdmin } = useContext(AuthContext);
+  const { authenticateWith } = useContext(AuthContext);
   const [data, setData] = useState({ email: '', pass: '' });
   const [requestStatus, setRequestStatus] = useState({ status: null });
   const history = useHistory();
@@ -49,7 +49,7 @@ export default function SignIn() {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     authenticateWith(data)
-      .then(() => ((isAdmin) ? history.push('/admin/request-supplies') : history.push('/supply-requests')))
+      .then(resData => (resData.admin ? history.push('/admin/request-supplies') : history.push('/supply-requests')))
       .catch(() => {
         setRequestStatus({ status: 'error' });
       });

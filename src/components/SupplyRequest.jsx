@@ -1,19 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Button,
-  Container,
-  Grid,
-  MenuItem,
-  TextField,
-  Typography,
-} from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import { SuppliesService, AreasService, SuppliesRequestService } from '../services/CommonService';
-import { AuthContext } from '../contexts/AuthContext';
-import InformativeDialog from './common/InformativeDialog';
+import { AuthContext } from '../contexts/AuthContext.jsx';
+import InformativeDialog from './common/InformativeDialog.jsx';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -34,136 +32,87 @@ const useStyles = makeStyles((theme) => ({
 
 const SupplyRequest = () => {
   const classes = useStyles();
-
   const { token } = useContext(AuthContext);
 
-  const [data, setData] = useState({ supply: '', area: '', amount: 0 });
-  const [supplies, setSupplies] = useState([]);
   const [areas, setAreas] = useState([]);
-  const [selectedSupply, setSelectedSupply] = useState([]);
+  const [supplies, setSupplies] = useState([]);
+  const [amountValue, setAmountValue] = useState(0);
+  const [areaValue, setAreaValue] = useState('');
+  const [areaInputValue, setAreaInputValue] = useState('');
+  const [supplyValue, setSupplyValue] = useState('');
+  const [supplyInputValue, setSupplyInputValue] = useState('');
   const [postStatus, setPostStatus] = useState('');
   const [errorDialogStatus, setErrorDialogStatus] = useState({ open: false, text: '' });
 
-  useEffect(() => {
-    SuppliesService.get()
-      .then((responseData) => {
-        setSupplies(responseData);
-      })
-      .catch(() => setErrorDialogStatus({ open: true, text: 'Error inesperado.' }));
-  }, [token]);
+  const setError = (error) => {
+    setErrorDialogStatus({ open: true, text: `Error: ${error}` });
+  };
 
   useEffect(() => {
-    AreasService.get()
-      .then((responseData) => setAreas(responseData))
-      .catch(() => setErrorDialogStatus({ open: true, text: 'Error inesperado.' }));
+    AreasService.get().then(data => setAreas(data)).catch(setError);
   }, []);
 
-  const handleSupplyChange = (event) => {
-    setData({
-      ...data,
-      supply: event.target.value,
-    });
-    setSelectedSupply(event.target.value);
-  };
-
-  const handleInputChange = (event) => {
-    setData({
-      ...data,
-      [event.target.name]: event.target.value,
-    });
-  };
+  useEffect(() => {
+    SuppliesService.get().then(data => setSupplies(data)).catch(setError);
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const data = { supply: supplyValue, area: areaValue, amount: amountValue };
     SuppliesRequestService.post(data, token)
       .then(() => {
         setPostStatus('success');
+        setAreaValue('');
+        setSupplyValue('');
+        setAmountValue(0);
       })
-      .catch(() => {
-        setPostStatus('error');
-      });
+      .catch(setError);
   };
 
   return (
     <>
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
-            Solicitud de insumo
-          </Typography>
-          {(postStatus === 'success') ? (
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Alert className={classes.alert} severity="success">
-                  Solicitud enviada satisfactoriamente
-                </Alert>
-              </Grid>
-            </Grid>
-          ) : (
-            <></>
-          )}
-          {postStatus === 'error' ? (
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Alert className={classes.alert} severity="error">
-                  Error inesperado al enviar la solicitud.
-                </Alert>
-              </Grid>
-            </Grid>
-          ) : (
-            <></>
-          )}
+          <Typography component="h1" variant="h5">Solicitud de insumo</Typography>
           <form className={classes.form} onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
+                {postStatus === 'success' ? (
+                  <Alert className={classes.alert} severity="success">
+                    Solicitud enviada satisfactoriamente
+                  </Alert>
+                ) : (<></>)}
+                <Autocomplete
+                  value={areaValue}
+                  onChange={(event, newValue) => setAreaValue(newValue)}
+                  inputValue={areaInputValue}
+                  onInputChange={(event, newInputValue) => setAreaInputValue(newInputValue)}
                   id="area"
-                  name="area"
-                  select
-                  label="Area"
+                  options={areas}
+                  getOptionLabel={area => area.name || ''}
                   fullWidth
-                  value={data.area}
-                  onChange={handleInputChange}
-                  helperText="Por favor, seleccione un area"
-                >
-                  {areas.map((area) => (
-                    <MenuItem key={area.id} value={area}>
-                      {area.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
-                <TextField
+                  renderInput={params => <TextField {...params} label="Áreas" margin="normal" />}
+                />
+                <Autocomplete
+                  value={supplyValue}
+                  onChange={(event, newValue) => setSupplyValue(newValue)}
+                  inputValue={supplyInputValue}
+                  onInputChange={(event, newInputValue) => setSupplyInputValue(newInputValue)}
                   id="supply"
-                  name="supply"
-                  select
-                  label="Insumo"
+                  options={supplies}
+                  getOptionLabel={supply => supply.name || ''}
                   fullWidth
-                  value={data.supply}
-                  onChange={handleSupplyChange}
-                  helperText="Por favor, seleccione un insumo"
-                >
-                  {supplies.map((supply) => (
-                    <MenuItem key={supply.id} value={supply}>
-                      {supply.name}
-                      {supply.stock
-                        ? `: ${supply.stock}disponible(s)`
-                        : ': Sin límite'}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                  renderInput={params => <TextField {...params} label="Insumos" margin="normal" />}
+                />
                 <TextField
                   id="amount"
-                  name="amount"
-                  type="number"
-                  inputProps={{
-                    min: 1,
-                    max: selectedSupply.stock ? selectedSupply.stock : 999999999,
-                  }}
-                  required
-                  fullWidth
                   label="Cantidad"
-                  value={data.amount}
-                  onChange={handleInputChange}
+                  type="number"
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  inputProps={{ min: 1, max: 1000 }}
+                  value={amountValue}
+                  onChange={event => setAmountValue(event.target.value)}
                 />
                 <Button
                   type="submit"

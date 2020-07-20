@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { InputLabel, MenuItem, Select } from '@material-ui/core';
 import { TownsService } from '../../services/CommonService';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   button: {
     display: 'block',
     marginTop: theme.spacing(2),
@@ -59,7 +59,7 @@ const TownSelection = ({
         <MenuItem value="">
           <em>Sin selección</em>
         </MenuItem>
-        {options.map((option) => (
+        {options.map(option => (
           <MenuItem key={option.id} value={option}>
             {option.name}
           </MenuItem>

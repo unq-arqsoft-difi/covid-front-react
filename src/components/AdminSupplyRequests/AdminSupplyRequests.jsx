@@ -19,13 +19,13 @@ import {
   AreasService,
   SuppliesService,
 } from '../../services/CommonService';
-import { AuthContext } from '../../contexts/AuthContext';
-import StatusChip from '../common/StatusChip';
-import AcceptRequestModal from './components/AcceptRequestModal';
-import RejectRequestModal from './components/RejectRequestModal';
-import InformativeDialog from '../common/InformativeDialog';
+import { AuthContext } from '../../contexts/AuthContext.jsx';
+import StatusChip from '../common/StatusChip.jsx';
+import AcceptRequestModal from './components/AcceptRequestModal.jsx';
+import RejectRequestModal from './components/RejectRequestModal.jsx';
+import InformativeDialog from '../common/InformativeDialog.jsx';
 
-const StyledTableCell = withStyles((theme) => ({
+const StyledTableCell = withStyles(theme => ({
   head: {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.white,
@@ -35,7 +35,7 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-const StyledTableRow = withStyles((theme) => ({
+const StyledTableRow = withStyles(theme => ({
   root: {
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,
@@ -73,20 +73,20 @@ const AdminSupplyRequests = () => {
 
   useEffect(refreshData, [token]);
 
-  const arrayToObject = (array) => array.reduce((obj, item) => {
+  const arrayToObject = array => array.reduce((obj, item) => {
     obj.push(item.id, item.name);
     return obj;
   }, {});
 
   useEffect(() => {
     SuppliesService.get()
-      .then((response) => setSupplies(arrayToObject(response)))
+      .then(response => setSupplies(arrayToObject(response)))
       .catch(() => {});
   }, []);
 
   useEffect(() => {
     AreasService.get()
-      .then((response) => setAreas(arrayToObject(response)))
+      .then(response => setAreas(arrayToObject(response)))
       .catch(() => {});
   }, []);
 
@@ -141,7 +141,7 @@ const AdminSupplyRequests = () => {
               </StyledTableRow>
             </TableHead>
             <TableBody>
-              {data.map((row) => (
+              {data.map(row => (
                 <StyledTableRow key={row.id}>
                   <StyledTableCell component="th" scope="row">
                     {supplies[row.supplyId]}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { InputLabel, MenuItem, Select } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   button: {
     display: 'block',
     marginTop: theme.spacing(2),
@@ -58,7 +58,7 @@ const SingleSelection = ({
         <MenuItem value="">
           <em>Sin selección</em>
         </MenuItem>
-        {options.map((option) => (
+        {options.map(option => (
           <MenuItem key={option.id} value={option}>
             {option.name}
           </MenuItem>

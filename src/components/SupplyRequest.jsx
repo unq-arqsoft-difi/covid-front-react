@@ -10,10 +10,10 @@ import {
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { SuppliesService, AreasService, SuppliesRequestService } from '../services/CommonService';
-import { AuthContext } from '../contexts/AuthContext';
-import InformativeDialog from './common/InformativeDialog';
+import { AuthContext } from '../contexts/AuthContext.jsx';
+import InformativeDialog from './common/InformativeDialog.jsx';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 
 const SupplyRequest = () => {
   const classes = useStyles();
-
   const { token } = useContext(AuthContext);
 
   const [data, setData] = useState({ supply: '', area: '', amount: 0 });
@@ -46,15 +45,13 @@ const SupplyRequest = () => {
 
   useEffect(() => {
     SuppliesService.get()
-      .then((responseData) => {
-        setSupplies(responseData);
-      })
+      .then(responseData => setSupplies(responseData))
       .catch(() => setErrorDialogStatus({ open: true, text: 'Error inesperado.' }));
   }, [token]);
 
   useEffect(() => {
     AreasService.get()
-      .then((responseData) => setAreas(responseData))
+      .then(responseData => setAreas(responseData))
       .catch(() => setErrorDialogStatus({ open: true, text: 'Error inesperado.' }));
   }, []);
 
@@ -126,7 +123,7 @@ const SupplyRequest = () => {
                   onChange={handleInputChange}
                   helperText="Por favor, seleccione un area"
                 >
-                  {areas.map((area) => (
+                  {areas.map(area => (
                     <MenuItem key={area.id} value={area}>
                       {area.name}
                     </MenuItem>
@@ -142,7 +139,7 @@ const SupplyRequest = () => {
                   onChange={handleSupplyChange}
                   helperText="Por favor, seleccione un insumo"
                 >
-                  {supplies.map((supply) => (
+                  {supplies.map(supply => (
                     <MenuItem key={supply.id} value={supply}>
                       {supply.name}
                       {supply.stock

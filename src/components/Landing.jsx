@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   subTitleContainer: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(4),

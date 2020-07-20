@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import AuthContextProvider from './contexts/AuthContext';
-import Routes from './Routes';
+import AuthContextProvider from './contexts/AuthContext.jsx';
+import Routes from './Routes.jsx';
 
 const useStyles = makeStyles(() => ({
   root: {

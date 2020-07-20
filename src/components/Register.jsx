@@ -15,11 +15,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Alert from '@material-ui/lab/Alert';
 import { useHistory } from 'react-router-dom';
 import UsersService from '../services/UsersService';
-import SingleSelection from './common/SingleSelection';
-import TownSelection from './common/TownSelection';
+import SingleSelection from './common/SingleSelection.jsx';
+import TownSelection from './common/TownSelection.jsx';
 import { InstitutionsService, ProvincesService } from '../services/CommonService';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',

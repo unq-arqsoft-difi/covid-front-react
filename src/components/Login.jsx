@@ -12,9 +12,9 @@ import Alert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../contexts/AuthContext.jsx';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',

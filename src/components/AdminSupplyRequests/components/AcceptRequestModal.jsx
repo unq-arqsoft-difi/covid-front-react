@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogContentText,
 } from '@material-ui/core';
-import SingleSelection from '../../common/SingleSelection';
+import SingleSelection from '../../common/SingleSelection.jsx';
 import { ProvidersService } from '../../../services/CommonService';
 
 const AcceptRequestModal = ({
@@ -30,7 +30,7 @@ const AcceptRequestModal = ({
               name="supplyProvider"
               label="Proveedor asignado"
               service={ProvidersService}
-              onChange={(event) => setProvider(event.target.value.id)}
+              onChange={event => setProvider(event.target.value.id)}
             />
           </Grid>
         </Grid>

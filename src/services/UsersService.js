@@ -1,7 +1,7 @@
 import http from './http-common';
 
 const UsersService = {
-  post: (user) => new Promise((resolve, reject) => {
+  post: user => new Promise((resolve, reject) => {
     http
       .post('/users', user)
       .then((response) => {

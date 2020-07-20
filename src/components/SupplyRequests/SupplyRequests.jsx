@@ -68,7 +68,7 @@ const SupplyRequests = () => {
       .catch(() => setErrorDialogOpen(true));
   };
 
-  const f = n => String("00" + n).slice(-2);
+  const f = n => String(`00${n}`).slice(-2);
   const formatDate = date => `${f(date.getUTCDate())}/${f(
     date.getUTCMonth() + 1,
   )}/${date.getUTCFullYear()}  ${f(date.getUTCHours())}:${f(

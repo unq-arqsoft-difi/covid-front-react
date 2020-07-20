@@ -12,6 +12,7 @@ const AuthContextProvider = ({ children }) => {
   const authenticateWith = async (credentials) => {
     const data = await AuthService.post(credentials);
     setAuthData(data);
+    return data;
   };
 
   const logOut = () => setAuthData({});

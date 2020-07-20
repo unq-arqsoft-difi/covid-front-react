@@ -14,11 +14,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Cancel, CheckCircle } from '@material-ui/icons';
-import {
-  AdminSuppliesRequestService,
-  AreasService,
-  SuppliesService,
-} from '../../services/CommonService';
+import { AdminSuppliesRequestService } from '../../services/CommonService';
 import { AuthContext } from '../../contexts/AuthContext.jsx';
 import StatusChip from '../common/StatusChip.jsx';
 import AcceptRequestModal from './components/AcceptRequestModal.jsx';
@@ -54,8 +50,6 @@ const AdminSupplyRequests = () => {
   const { token } = useContext(AuthContext);
 
   const [data, setData] = useState([]);
-  const [supplies, setSupplies] = useState([]);
-  const [areas, setAreas] = useState([]);
 
   const [openRejectRequest, setOpenRejectRequest] = useState(false);
   const [openAcceptRequest, setOpenAcceptRequest] = useState(false);
@@ -72,23 +66,6 @@ const AdminSupplyRequests = () => {
   };
 
   useEffect(refreshData, [token]);
-
-  const arrayToObject = array => array.reduce((obj, item) => {
-    obj.push(item.id, item.name);
-    return obj;
-  }, {});
-
-  useEffect(() => {
-    SuppliesService.get()
-      .then(response => setSupplies(arrayToObject(response)))
-      .catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    AreasService.get()
-      .then(response => setAreas(arrayToObject(response)))
-      .catch(() => {});
-  }, []);
 
   const reject = (id, reason) => {
     AdminSuppliesRequestService.reject(id, reason, token)
@@ -143,44 +120,42 @@ const AdminSupplyRequests = () => {
             <TableBody>
               {data.map(row => (
                 <StyledTableRow key={row.id}>
-                  <StyledTableCell component="th" scope="row">
-                    {supplies[row.supplyId]}
-                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">{row.supply.name}</StyledTableCell>
                   <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                  <StyledTableCell align="left">
-                    {areas[row.areaId]}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
-                    <StatusChip statusName={row.status} />
-                  </StyledTableCell>
+                  <StyledTableCell align="left">{row.area.name}</StyledTableCell>
+                  <StyledTableCell align="left"><StatusChip statusName={row.status} /></StyledTableCell>
                   <StyledTableCell align="left">
                     <Tooltip title="Aceptar">
-                      <IconButton
-                        aria-label="accept"
-                        color="primary"
-                        size="small"
-                        disabled={!(row.status === 'Pending')}
-                        onClick={() => {
-                          setSelectedRequest(row);
-                          setOpenAcceptRequest(true);
-                        }}
-                      >
-                        <CheckCircle />
-                      </IconButton>
+                      <span>
+                        <IconButton
+                          aria-label="accept"
+                          color="primary"
+                          size="small"
+                          disabled={!(row.status === 'Pending')}
+                          onClick={() => {
+                            setSelectedRequest(row);
+                            setOpenAcceptRequest(true);
+                          }}
+                        >
+                          <CheckCircle />
+                        </IconButton>
+                      </span>
                     </Tooltip>
                     <Tooltip title="Rechazar">
-                      <IconButton
-                        aria-label="reject"
-                        color="secondary"
-                        size="small"
-                        disabled={!(row.status === 'Pending')}
-                        onClick={() => {
-                          setSelectedRequest(row);
-                          setOpenRejectRequest(true);
-                        }}
-                      >
-                        <Cancel />
-                      </IconButton>
+                      <span>
+                        <IconButton
+                          aria-label="reject"
+                          color="secondary"
+                          size="small"
+                          disabled={!(row.status === 'Pending')}
+                          onClick={() => {
+                            setSelectedRequest(row);
+                            setOpenRejectRequest(true);
+                          }}
+                        >
+                          <Cancel />
+                        </IconButton>
+                      </span>
                     </Tooltip>
                   </StyledTableCell>
                 </StyledTableRow>

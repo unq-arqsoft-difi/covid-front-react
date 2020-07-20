@@ -92,6 +92,12 @@ const AdminSupplyRequests = () => {
         setErrorDialogOpen(true);
       });
   };
+  const f = n => (n < 10 ? n : `0${n}`);
+  const formatDate = date => `${f(date.getUTCDate())}/${f(
+    date.getUTCMonth() + 1,
+  )}/${date.getUTCFullYear()}  ${f(date.getUTCHours())}:${f(
+    date.getUTCMinutes(),
+  )}`;
 
   return (
     <>
@@ -110,6 +116,7 @@ const AdminSupplyRequests = () => {
           <Table stickyHeader className={classes.table} size="small">
             <TableHead>
               <StyledTableRow>
+                <StyledTableCell>Fecha</StyledTableCell>
                 <StyledTableCell>Insumo</StyledTableCell>
                 <StyledTableCell align="right">Cantidad</StyledTableCell>
                 <StyledTableCell align="left">Area</StyledTableCell>
@@ -120,10 +127,19 @@ const AdminSupplyRequests = () => {
             <TableBody>
               {data.map(row => (
                 <StyledTableRow key={row.id}>
-                  <StyledTableCell component="th" scope="row">{row.supply.name}</StyledTableCell>
+                  <StyledTableCell>
+                    {formatDate(new Date(row.createdAt))}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    {row.supply.name}
+                  </StyledTableCell>
                   <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                  <StyledTableCell align="left">{row.area.name}</StyledTableCell>
-                  <StyledTableCell align="left"><StatusChip statusName={row.status} /></StyledTableCell>
+                  <StyledTableCell align="left">
+                    {row.area.name}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    <StatusChip statusName={row.status} />
+                  </StyledTableCell>
                   <StyledTableCell align="left">
                     <Tooltip title="Aceptar">
                       <span>

@@ -5,44 +5,28 @@ import AuthService from '../services/AuthService';
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
-  const authKey = 'auth';
-  const isAdminKey = 'isAdmin';
-  const [token, setToken] = useState(localStorage.getItem(authKey));
-  const [isAdmin, setIsAdmin] = useState(localStorage.getItem(isAdminKey));
+  const [authData, setAuthData] = useState(JSON.parse(localStorage.getItem('authData') || '{}'));
 
-  useEffect(() => {
-    localStorage.setItem(authKey, token);
-  }, [token]);
+  useEffect(() => localStorage.setItem('authData', JSON.stringify(authData)), [authData]);
 
-  useEffect(() => {
-    localStorage.setItem(isAdminKey, isAdmin);
-  }, [isAdmin]);
-
-  const authenticateWith = (credentials) => new Promise((resolve, reject) => {
-    AuthService.post(credentials)
-      .then((data) => {
-        setIsAdmin(data.admin);
-        setToken(data.token);
-        resolve(data);
-      })
-      .catch(reject);
-  });
-
-  const logOut = () => {
-    setToken(null);
-    setIsAdmin(false);
+  const authenticateWith = async (credentials) => {
+    const data = await AuthService.post(credentials);
+    setAuthData(data);
   };
 
-  const isAuthenticated = () => !!token;
+  const logOut = () => setAuthData({});
+
+  const isAuthenticated = () => !!authData.token;
 
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated,
-        token,
-        logOut,
+        authData,
         authenticateWith,
-        isAdmin,
+        isAdmin: authData.admin,
+        isAuthenticated,
+        logOut,
+        token: authData.token,
       }}
     >
       {children}

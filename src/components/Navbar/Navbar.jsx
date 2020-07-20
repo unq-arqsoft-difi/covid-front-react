@@ -20,13 +20,17 @@ import {
   Archive,
   AssignmentTurnedIn,
 } from '@material-ui/icons';
-
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../contexts/AuthContext';
-import MobileMenu from './components/MobileMenu';
 
-const useStyles = makeStyles((theme) => ({
+import { AuthContext } from '../../contexts/AuthContext.jsx';
+import MobileMenu from './components/MobileMenu.jsx';
+
+const useStyles = makeStyles(theme => ({
   offset: theme.mixins.toolbar,
+  name: {
+    verticalAlign: 'middle',
+    marginTop: 6,
+  },
   list: {
     width: 250,
   },
@@ -46,17 +50,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
-  const [drawerOpen, setDrawerOpem] = useState(false);
-  const { isAuthenticated, logOut, isAdmin } = useContext(AuthContext);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const { isAuthenticated, logOut, authData } = useContext(AuthContext);
 
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === 'keydown'
-      && (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-    setDrawerOpem(open);
+  const toggleDrawer = open => (event) => {
+    if (event.type === 'keydown' && ['Tab', 'Shift'].includes(event.key)) return;
+    setDrawerOpen(open);
   };
 
   const drawerList = (
@@ -90,7 +89,7 @@ export default function PrimarySearchAppBar() {
         ) : (
           <></>
         )}
-        {isAdmin ? (
+        {authData.admin ? (
           <>
             <ListItem button component={Link} to="/admin/request-supplies">
               <ListItemIcon>
@@ -135,14 +134,17 @@ export default function PrimarySearchAppBar() {
             {drawerList}
           </Drawer>
           <Typography className={classes.title} variant="h6" noWrap>
-            DIFI Ecosystem
+            DiFi Ecosystem
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             {isAuthenticated() ? (
-              <Button color="inherit" onClick={logOut} component={Link} to="/">
-                Salir
-              </Button>
+              <>
+                <Typography className={classes.name}>{`${authData.name}, ${authData.job}`}</Typography>
+                <Button color="inherit" onClick={logOut} component={Link} to="/">
+                  Salir
+                </Button>
+              </>
             ) : (
               renderRegisterLoginMenu
             )}

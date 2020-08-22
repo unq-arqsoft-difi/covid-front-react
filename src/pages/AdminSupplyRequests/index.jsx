@@ -16,10 +16,10 @@ import {
 import { Cancel, CheckCircle } from '@material-ui/icons';
 import { AdminSuppliesRequestService } from '../../services/CommonService';
 import { AuthContext } from '../../contexts/AuthContext.jsx';
-import StatusChip from '../common/StatusChip.jsx';
+import StatusChip from '../../components/StatusChip';
+import InformativeDialog from '../../components/InformativeDialog';
 import AcceptRequestModal from './components/AcceptRequestModal.jsx';
 import RejectRequestModal from './components/RejectRequestModal.jsx';
-import InformativeDialog from '../common/InformativeDialog.jsx';
 
 const StyledTableCell = withStyles(theme => ({
   head: {

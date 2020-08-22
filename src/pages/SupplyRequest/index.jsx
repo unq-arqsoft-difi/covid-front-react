@@ -7,9 +7,9 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { SuppliesService, AreasService, SuppliesRequestService } from '../services/CommonService';
-import { AuthContext } from '../contexts/AuthContext.jsx';
-import InformativeDialog from './common/InformativeDialog.jsx';
+import { SuppliesService, AreasService, SuppliesRequestService } from '../../services/CommonService';
+import { AuthContext } from '../../contexts/AuthContext.jsx';
+import InformativeDialog from '../../components/InformativeDialog/index.jsx';
 
 const useStyles = makeStyles(theme => ({
   paper: {

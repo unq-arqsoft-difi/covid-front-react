@@ -28,5 +28,13 @@ module.exports = {
     ],
     "rules": {
         "arrow-parens": ["error", "as-needed", { "requireForBlockBody": true }]
-    }
+    },
+    "settings": {
+        "import/resolver":{
+            "node": {
+              "extensions": [
+                ".jsx"
+              ]
+            }
+    }}
 };

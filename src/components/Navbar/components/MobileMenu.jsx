@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core/';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../../contexts/AuthContext.jsx';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 const useStyles = makeStyles(theme => ({
   menuButton: {

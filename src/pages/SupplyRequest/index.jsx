@@ -8,8 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { SuppliesService, AreasService, SuppliesRequestService } from '../../services/CommonService';
-import { AuthContext } from '../../contexts/AuthContext.jsx';
-import InformativeDialog from '../../components/InformativeDialog/index.jsx';
+import { AuthContext } from '../../contexts/AuthContext';
+import InformativeDialog from '../../components/InformativeDialog/index';
 
 const useStyles = makeStyles(theme => ({
   paper: {

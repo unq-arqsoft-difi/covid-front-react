@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import { Cancel } from '@material-ui/icons';
 import { SuppliesRequestService } from '../../services/CommonService';
-import { AuthContext } from '../../contexts/AuthContext.jsx';
+import { AuthContext } from '../../contexts/AuthContext';
 import InformativeDialog from '../../components/InformativeDialog';
 import StatusChip from '../../components/StatusChip';
 

@@ -15,11 +15,11 @@ import {
 } from '@material-ui/core';
 import { Cancel, CheckCircle } from '@material-ui/icons';
 import { AdminSuppliesRequestService } from '../../services/CommonService';
-import { AuthContext } from '../../contexts/AuthContext.jsx';
+import { AuthContext } from '../../contexts/AuthContext';
 import StatusChip from '../../components/StatusChip';
 import InformativeDialog from '../../components/InformativeDialog';
-import AcceptRequestModal from './components/AcceptRequestModal.jsx';
-import RejectRequestModal from './components/RejectRequestModal.jsx';
+import AcceptRequestModal from './components/AcceptRequestModal';
+import RejectRequestModal from './components/RejectRequestModal';
 
 const StyledTableCell = withStyles(theme => ({
   head: {

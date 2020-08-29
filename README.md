@@ -18,8 +18,8 @@ Ir a <https://github.com/unq-arqsoft-difi/covid-back-node.git> y levantar la API
 ```sh
 git clone https://github.com/unq-arqsoft-difi/covid-front-react.git
 cd covid-front-react
-yarn install
-yarn run start
+npm install
+npm run start
 ```
 
 La APP quedará levantada en `http://localhost:3000`
@@ -36,7 +36,7 @@ cd covid-front-react
 ### Install
 
 ```sh
-yarn install
+npm install
 ```
 
 ### Run
@@ -44,7 +44,7 @@ yarn install
 Ir a <https://github.com/unq-arqsoft-difi/covid-back-node.git> y levantar la API.
 
 ```sh
-yarn run start
+npm run start
 ```
 
 La API quedará levantada en `http://localhost:3000`

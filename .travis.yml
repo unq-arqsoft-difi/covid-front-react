@@ -9,7 +9,7 @@ services:
 
 before_install: bash .travis/docker_setup_ssh.sh
 
-before_script: yarn run lint
+before_script: npm run lint
 after_success: bash .travis/docker_and_deploy.sh
 
 email:

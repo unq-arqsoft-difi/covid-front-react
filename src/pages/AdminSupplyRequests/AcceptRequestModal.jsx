@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 
-import { ProvidersService } from '../../../services/CommonService';
+import { ProvidersService } from '../../services/CommonService';
 
 const AcceptRequestModal = ({
   open, model, onClose, onAccept,

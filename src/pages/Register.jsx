@@ -13,8 +13,8 @@ import ListItem from '@material-ui/core/ListItem';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import UsersService from '../../services/UsersService';
-import { InstitutionsService, ProvincesService, TownsService } from '../../services/CommonService';
+import UsersService from '../services/UsersService';
+import { InstitutionsService, ProvincesService, TownsService } from '../services/CommonService';
 
 const useStyles = makeStyles(theme => ({
   paper: {

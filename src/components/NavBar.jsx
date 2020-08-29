@@ -22,8 +22,8 @@ import {
 } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
-import { AuthContext } from '../../contexts/AuthContext';
-import MobileMenu from './components/MobileMenu';
+import { AuthContext } from '../contexts/AuthContext';
+import MobileMenu from './NavBarMobileMenu';
 
 const useStyles = makeStyles(theme => ({
   offset: theme.mixins.toolbar,

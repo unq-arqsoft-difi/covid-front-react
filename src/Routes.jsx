@@ -7,11 +7,11 @@ import Landing from './pages/Landing';
 import SupplyRequest from './pages/SupplyRequest';
 import SupplyRequests from './pages/SupplyRequests';
 import AdminSupplyRequests from './pages/AdminSupplyRequests';
-import Navbar from './components/Navbar';
+import NavBar from './components/NavBar';
 
 const Routes = () => (
   <Router>
-    <Navbar />
+    <NavBar />
     <Container>
       <Switch>
         <Route exact path="/" component={Landing} />

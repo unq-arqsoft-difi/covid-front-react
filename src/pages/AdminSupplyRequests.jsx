@@ -14,12 +14,12 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Cancel, CheckCircle } from '@material-ui/icons';
-import { AdminSuppliesRequestService } from '../../services/CommonService';
-import { AuthContext } from '../../contexts/AuthContext.jsx';
-import StatusChip from '../common/StatusChip.jsx';
-import AcceptRequestModal from './components/AcceptRequestModal.jsx';
-import RejectRequestModal from './components/RejectRequestModal.jsx';
-import InformativeDialog from '../common/InformativeDialog.jsx';
+import { AdminSuppliesRequestService } from '../services/CommonService';
+import { AuthContext } from '../contexts/AuthContext';
+import StatusChip from '../components/StatusChip';
+import InformativeDialog from '../components/InformativeDialog';
+import AcceptRequestModal from './AdminSupplyRequests/AcceptRequestModal';
+import RejectRequestModal from './AdminSupplyRequests/RejectRequestModal';
 
 const StyledTableCell = withStyles(theme => ({
   head: {

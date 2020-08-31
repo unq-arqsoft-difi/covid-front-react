@@ -3,11 +3,6 @@ module.exports = {
         "browser": true,
         "es6": true
     },
-    "settings": {
-        "react": {
-          "version": "detect"
-        }
-    },
     "extends": [
         "plugin:react/recommended",
         "airbnb-base"
@@ -28,5 +23,16 @@ module.exports = {
     ],
     "rules": {
         "arrow-parens": ["error", "as-needed", { "requireForBlockBody": true }]
-    }
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        },
+        "import/resolver":{
+            "node": {
+              "extensions": [
+                ".jsx"
+              ]
+            }
+    }}
 };

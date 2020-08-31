@@ -14,10 +14,10 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Cancel } from '@material-ui/icons';
-import { SuppliesRequestService } from '../../services/CommonService';
-import { AuthContext } from '../../contexts/AuthContext.jsx';
-import InformativeDialog from '../common/InformativeDialog.jsx';
-import StatusChip from '../common/StatusChip.jsx';
+import { SuppliesRequestService } from '../services/CommonService';
+import { AuthContext } from '../contexts/AuthContext';
+import InformativeDialog from '../components/InformativeDialog';
+import StatusChip from '../components/StatusChip';
 
 const StyledTableCell = withStyles(theme => ({
   head: {

@@ -12,7 +12,7 @@ import Alert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext.jsx';
+import { AuthContext } from '../contexts/AuthContext';
 
 const useStyles = makeStyles(theme => ({
   paper: {

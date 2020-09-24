@@ -58,7 +58,7 @@ const InstitutionsService = {
 const TownsService = {
   get: provinceId => new Promise((resolve, reject) => {
     http
-      .get(`/support/provinces/${provinceId}/towns`)
+      .get(`/support/provinces/${provinceId}?include=towns`)
       .then((response) => {
         resolve(response.data);
       })
@@ -130,7 +130,7 @@ const AdminSuppliesRequestService = {
     });
 
     http
-      .get('/admin/request-supplies', customConfig)
+      .get('/request-supplies', customConfig)
       .then(response => resolve(response.data))
       .catch(error => (error.response ? reject(error.response.data) : reject(error)));
   }),
@@ -142,7 +142,7 @@ const AdminSuppliesRequestService = {
       return updatedConfig;
     });
     http
-      .put(`/admin/request-supplies/${id}/reject`, { reason }, customConfig)
+      .patch(`/request-supplies/${id}`, { reason, status: 'Rejected' }, customConfig)
       .then(response => resolve(response.data))
       .catch(error => (error.response ? reject(error.response.data) : reject(error)));
   }),
@@ -154,7 +154,7 @@ const AdminSuppliesRequestService = {
       return updatedConfig;
     });
     http
-      .put(`/admin/request-supplies/${id}/approve`, { providerId }, customConfig)
+      .put(`/request-supplies/${id}`, { providerId, status: 'Approved' }, customConfig)
       .then(response => resolve(response.data))
       .catch(error => (error.response ? reject(error.response.data) : reject(error)));
   }),
